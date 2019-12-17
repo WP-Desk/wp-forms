@@ -7,8 +7,9 @@ use WPDesk\Forms\AbstractForm;
 class TestForm extends \PHPUnit\Framework\TestCase
 {
 
-	const FORM1_ID = 'test_form';
-	const TEST_ARRAY = [ 'test' => true ];
+	const FORM1_ID                = 'test_form';
+	const FORM1_FORM_DATA         = [ 'test' => true ];
+	const FORM1_UPDATED_FORM_DATA = [ 'test666' => true ];
 
 	private $form;
 
@@ -19,7 +20,7 @@ class TestForm extends \PHPUnit\Framework\TestCase
 		                   ->setMethods(['get_form_id'])
 		                   ->getMockForAbstractClass();
 		$this->form->method( 'get_form_id' )->willReturn( self::FORM1_ID );
-		$this->form->method( 'create_form_data' )->willReturn( self::TEST_ARRAY );
+		$this->form->method( 'create_form_data' )->willReturn( self::FORM1_FORM_DATA );
 	}
 
 	protected function getForm(){
@@ -41,7 +42,7 @@ class TestForm extends \PHPUnit\Framework\TestCase
 	public function testFormData()
 	{
 		$form = $this->getForm();
-		$this->assertSame( self::TEST_ARRAY, $form->get_form_data());
+		$this->assertSame( self::FORM1_FORM_DATA, $form->get_form_data());
 	}
 
 	/**
@@ -50,9 +51,8 @@ class TestForm extends \PHPUnit\Framework\TestCase
 	public function testUpdatedFormData()
 	{
 		$form = $this->getForm();
-		$updateData = [ 'updated' => true ];
 
-		$form->update_form_data( $updateData );
-		$this->assertSame( array_merge( self::TEST_ARRAY, $updateData ), $form->get_form_data());
+		$form->update_form_data( self::FORM1_UPDATED_FORM_DATA );
+		$this->assertSame( array_merge( self::FORM1_FORM_DATA, self::FORM1_UPDATED_FORM_DATA ), $form->get_form_data());
 	}
 }
