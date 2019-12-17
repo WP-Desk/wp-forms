@@ -26,6 +26,15 @@ abstract class AbstractForm {
 
 
 	/**
+	 * Checks if form should be active.
+	 *
+	 * @return bool
+	 */
+	public function is_active() {
+		return true;
+	}
+
+	/**
 	 * Create form data and return an associative array.
 	 *
 	 * @return array
@@ -50,6 +59,23 @@ abstract class AbstractForm {
 		return array_merge(
 			$this->create_form_data(),
 			$this->updated_data
+		);
+	}
+
+	/**
+	 * Get prefixed array returns array with prefixed form_id
+	 *
+	 * @return array
+	 */
+	public function get_prefixed_form_data() {
+		$array = $this->get_form_data();
+		$form_id = $this->get_form_id();
+
+		return array_combine(
+			array_map( function ( $k ) use ( $form_id ) {
+				return $form_id . '_' . $k;
+			}, array_keys( $array ) ),
+			$array
 		);
 	}
 

@@ -7,24 +7,23 @@ use WPDesk\Forms\AbstractForm;
 class TestForm extends \PHPUnit\Framework\TestCase
 {
 
-	private $anonymousForm;
+	const FORM1_ID = 'test_form';
+	const TEST_ARRAY = [ 'test' => true ];
+
+	private $form;
 
 	protected function setUp(){
-
 		// Create a new instance from the Abstract Class
-		$this->anonymousForm = new class extends AbstractForm {
-
-			protected $form_id = 'test_form';
-
-			protected function create_form_data() {
-				return [ 'test' => true ];
-			}
-
-		};
+		$this->form = $this->getMockBuilder( AbstractForm::class )
+		                   ->enableOriginalConstructor()
+		                   ->setMethods(['get_form_id'])
+		                   ->getMockForAbstractClass();
+		$this->form->method( 'get_form_id' )->willReturn( self::FORM1_ID );
+		$this->form->method( 'create_form_data' )->willReturn( self::TEST_ARRAY );
 	}
 
-	protected function getAnonymousForm(){
-		return clone $this->anonymousForm;
+	protected function getForm(){
+		return clone $this->form;
 	}
 
     /**
@@ -32,8 +31,8 @@ class TestForm extends \PHPUnit\Framework\TestCase
      */
     public function testFormId()
     {
-    	$form = $this->getAnonymousForm();
-	    $this->assertEquals('test_form', $form->get_form_id());
+    	$form = $this->getForm();
+	    $this->assertEquals(self::FORM1_ID, $form->get_form_id());
     }
 
 	/**
@@ -41,8 +40,8 @@ class TestForm extends \PHPUnit\Framework\TestCase
 	 */
 	public function testFormData()
 	{
-		$form = $this->getAnonymousForm();
-		$this->assertSame( [ 'test' => true ], $form->get_form_data());
+		$form = $this->getForm();
+		$this->assertSame( self::TEST_ARRAY, $form->get_form_data());
 	}
 
 	/**
@@ -50,10 +49,10 @@ class TestForm extends \PHPUnit\Framework\TestCase
 	 */
 	public function testUpdatedFormData()
 	{
-		$form = $this->getAnonymousForm();
+		$form = $this->getForm();
 		$updateData = [ 'updated' => true ];
 
 		$form->update_form_data( $updateData );
-		$this->assertSame( [ 'test' => true, 'updated' => true ], $form->get_form_data());
+		$this->assertSame( array_merge( self::TEST_ARRAY, $updateData ), $form->get_form_data());
 	}
 }

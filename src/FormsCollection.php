@@ -77,42 +77,23 @@ class FormsCollection {
 	 *
 	 * @return array
 	 */
-	public function get_forms_data( $prefixed = false) {
+	public function get_forms_data( $prefixed = false ) {
 
 		$forms_data = array();
 
 		foreach ( $this->forms as $form ) {
-			if ( $form instanceof ConditionalFormInterface ) {
-				if ( ! $form->is_active() ) {
-					continue;
-				}
+			if ( ! $form->is_active() ) {
+				continue;
 			}
 
-			if( $prefixed ){
-				$forms_data = array_merge( $forms_data, $this->get_prefixed_array( $form->get_form_data(), $form->get_form_id() ) );
-			}else {
+			if ( $prefixed ) {
+				$forms_data = array_merge( $forms_data, $form->get_prefixed_form_data() );
+			} else {
 				$forms_data = array_merge( $forms_data, $form->get_form_data() );
 			}
 		}
 
 		return $forms_data;
-	}
-
-	/**
-	 * Get prefixed array returns array with prefixed form_id
-	 *
-	 * @param array  $array.
-	 * @param string $form_id as prefix for array.
-	 *
-	 * @return array
-	 */
-	private function get_prefixed_array( array $array, $form_id ) {
-		return array_combine(
-			array_map( function ( $k ) use ($form_id) {
-				return $form_id . '_' . $k;
-			}, array_keys( $array ) ),
-			$array
-		);
 	}
 
 }
