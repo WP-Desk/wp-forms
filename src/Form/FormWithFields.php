@@ -10,8 +10,22 @@ use WPDesk\Persistence\Adapter\ArrayContainer;
 use WPDesk\Persistence\ElementNotExistsException;
 use WPDesk\View\Renderer\Renderer;
 
-class FormWithFields extends AbstractForm implements Form, FieldProvider {
-	/** @var Field[] */
+class FormWithFields implements Form, FieldProvider {
+	/**
+	 * Unique form_id.
+	 *
+	 * @var string
+	 */
+	protected $form_id = 'form';
+	/**
+	 * Updated data.
+	 *
+	 * @var array
+	 */
+	private $updated_data;
+	/**
+	 * @var Field[]
+	 */
 	private $fields;
 
 	public function __construct( array $fields, $form_id = 'form' ) {
@@ -26,6 +40,15 @@ class FormWithFields extends AbstractForm implements Form, FieldProvider {
 
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
+	}
+
+	/**
+	 * Checks if form should be active.
+	 *
+	 * @return bool
+	 */
+	public function is_active() {
+		return true;
 	}
 
 	/**
@@ -68,8 +91,6 @@ class FormWithFields extends AbstractForm implements Form, FieldProvider {
 	 * @param array|ContainerInterface $data
 	 */
 	public function set_data( $data ) {
-		$this->update_form_data($data); // backward compatibility
-
 		if ( is_array( $data ) ) {
 			$data = new ArrayContainer( $data );
 		}
@@ -110,7 +131,7 @@ class FormWithFields extends AbstractForm implements Form, FieldProvider {
 	}
 
 	public function get_data() {
-		$data = \array_merge( $this->create_form_data(), $this->updated_data ?: [] );
+		$data = $this->updated_data;
 
 		foreach ( $this->get_fields() as $field ) {
 			$data_key = $field->get_name();
@@ -122,15 +143,20 @@ class FormWithFields extends AbstractForm implements Form, FieldProvider {
 		return $data;
 	}
 
-	public function get_normalized_data() {
-		return $this->get_data();
-	}
-
-	protected function create_form_data() {
-		return [];
-	}
-
 	public function get_fields() {
 		return $this->fields;
+	}
+
+	/**
+	 * return form Id
+	 *
+	 * @return string
+	 */
+	public function get_form_id() {
+		return $this->form_id;
+	}
+
+	public function get_normalized_data() {
+		return $this->get_data();
 	}
 }

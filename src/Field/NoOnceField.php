@@ -2,7 +2,6 @@
 
 namespace WPDesk\Forms\Field;
 
-
 use WPDesk\Forms\Validator\NonceValidator;
 
 class NoOnceField extends BasicField {

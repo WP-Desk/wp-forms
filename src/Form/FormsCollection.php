@@ -7,6 +7,8 @@ use WPDesk\Forms\Form;
 /**
  * FormsCollection class store AbstractForm instances and merges forms data from all collections
  *
+ * @deprecated Use ony for backward compatibility with Forms 1.x
+ *
  * @package WPDesk\Forms
  */
 class FormsCollection {
@@ -16,6 +18,20 @@ class FormsCollection {
 	 * @var Form[]
 	 */
 	protected $forms = array();
+
+	/**
+	 * Unique form_id.
+	 *
+	 * @var string
+	 */
+	protected $form_id = 'form';
+
+	/**
+	 * Updated data.
+	 *
+	 * @var array
+	 */
+	protected $updated_data = array();
 
 	/**
 	 * Add forms. All keys in this array must be unique, otherwise add_form will throw exception.

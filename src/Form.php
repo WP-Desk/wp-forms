@@ -12,6 +12,11 @@ use WPDesk\View\Renderer\Renderer;
  * @package WPDesk\Forms
  */
 interface Form {
+	/**
+	 * Checks if form should be active.
+	 *
+	 * @return bool
+	 */
 	public function is_active();
 
 	public function is_submitted();
@@ -35,5 +40,12 @@ interface Form {
 	public function get_data();
 
 	public function get_normalized_data();
+
+	/**
+	 * return form Id
+	 *
+	 * @return string
+	 */
+	public function get_form_id();
 }
 

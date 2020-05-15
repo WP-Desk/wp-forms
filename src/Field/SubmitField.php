@@ -2,8 +2,6 @@
 
 namespace WPDesk\Forms\Field;
 
-use WPDesk\Forms\NoValueField;
-
 class SubmitField extends NoValueField {
 	public function get_template_name() {
 		return 'input-submit';

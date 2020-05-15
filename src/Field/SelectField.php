@@ -2,7 +2,6 @@
 
 namespace WPDesk\Forms\Field;
 
-
 class SelectField extends BasicField {
 
 	public function get_template_name() {
