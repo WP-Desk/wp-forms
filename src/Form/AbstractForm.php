@@ -1,12 +1,14 @@
 <?php
 
-namespace WPDesk\Forms;
+namespace WPDesk\Forms\Form;
 
 
 /**
- * Abstraction layer for forms.
+ * Old abstraction layer for forms.
  *
  * @package WPDesk\Forms
+ *
+ * @deprecated Use ony for backward compatibility with Forms 1.x
  */
 abstract class AbstractForm {
 
@@ -68,7 +70,7 @@ abstract class AbstractForm {
 	 * @return array
 	 */
 	public function get_prefixed_form_data() {
-		$array = $this->get_form_data();
+		$array   = $this->get_form_data();
 		$form_id = $this->get_form_id();
 
 		return array_combine(
