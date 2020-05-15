@@ -2,7 +2,6 @@
 
 namespace WPDesk\Forms\Field;
 
-
 class TextAreaField extends BasicField {
 	public function __construct() {
 		parent::__construct();

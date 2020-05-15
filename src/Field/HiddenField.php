@@ -2,7 +2,6 @@
 
 namespace WPDesk\Forms\Field;
 
-
 use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
 
 class HiddenField extends BasicField {
