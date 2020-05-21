@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \WPDesk\ShopMagic\FormField\Field $field
+ * @var \WPDesk\Forms\Field $field
  * @var string $name_prefix
  * @var string $value
  */

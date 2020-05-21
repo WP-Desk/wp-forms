@@ -4,7 +4,7 @@ use WPDesk\ShopMagic\Action\Builtin\SendMail\PlainMailTemplate;
 use WPDesk\ShopMagic\Action\Builtin\SendMail\WooCommerceMailTemplate;
 
 /**
- * @var \WPDesk\ShopMagic\FormField\Field $field
+ * @var \WPDesk\Forms\Field $field
  * @var string $name_prefix
  * @var string $value
  */

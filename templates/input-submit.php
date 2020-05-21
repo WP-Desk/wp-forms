@@ -1,7 +1,7 @@
 <?php
 /**
- * @var \WPDesk\ShopMagic\FormField\Field $field
- * @var ShopMagicVendor\WPDesk\View\Renderer\Renderer $renderer
+ * @var \WPDesk\Forms\Field $field
+ * @var \WPDesk\View\Renderer\Renderer $renderer
  * @var string $name_prefix
  * @var string $value
  *
