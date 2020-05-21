@@ -8,7 +8,7 @@ use WPDesk\Forms\FieldRenderer;
 /**
  * Can render form fields as JSON.
  *
- * @package WPDesk\ShopMagic\Admin\Automation\FormField
+ * @package WPDesk\Forms\Renderer
  */
 class JsonNormalizedRenderer implements FieldRenderer {
 	/**
