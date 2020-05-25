@@ -3,14 +3,16 @@
 namespace WPDesk\Forms\Form;
 
 use Psr\Container\ContainerInterface;
+use WPDesk\Forms\ContainerForm;
 use WPDesk\Forms\Field;
 use WPDesk\Forms\FieldProvider;
 use WPDesk\Forms\Form;
 use WPDesk\Persistence\Adapter\ArrayContainer;
 use WPDesk\Persistence\ElementNotExistsException;
+use WPDesk\Persistence\PersistentContainer;
 use WPDesk\View\Renderer\Renderer;
 
-class FormWithFields implements Form, FieldProvider {
+class FormWithFields implements Form, ContainerForm, FieldProvider {
 	/**
 	 * Unique form_id.
 	 *
@@ -24,40 +26,57 @@ class FormWithFields implements Form, FieldProvider {
 	 */
 	private $updated_data;
 	/**
+	 * Form fields.
+	 *
 	 * @var Field[]
 	 */
 	private $fields;
 
+	/**
+	 * FormWithFields constructor.
+	 *
+	 * @param array  $fields Form fields.
+	 * @param string $form_id Unique form id.
+	 */
 	public function __construct( array $fields, $form_id = 'form' ) {
 		$this->fields       = $fields;
 		$this->form_id      = $form_id;
 		$this->updated_data = null;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function is_submitted() {
-		return $this->updated_data !== null;
+		return null !== $this->updated_data;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
 	}
 
 	/**
-	 * Checks if form should be active.
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function is_active() {
 		return true;
 	}
 
 	/**
-	 * @param Field[] $fields
+	 * Add more fields to form.
+	 *
+	 * @param Field[] $fields Field to add to form.
 	 */
 	public function add_fields( array $fields ) {
 		array_map( [ $this, 'add_field' ], $fields );
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function is_valid() {
 		foreach ( $this->fields as $field ) {
 			$field_value     = isset( $this->updated_data[ $field->get_name() ] ) ? $this->updated_data[ $field->get_name() ] : null;
@@ -88,7 +107,9 @@ class FormWithFields implements Form, FieldProvider {
 	}
 
 	/**
-	 * @param array|ContainerInterface $data
+	 * Data could be saved in some place. Use this method to transmit them to form.
+	 *
+	 * @param array|ContainerInterface $data Data consistent with Form and ContainerForm interface.
 	 */
 	public function set_data( $data ) {
 		if ( is_array( $data ) ) {
@@ -106,12 +127,15 @@ class FormWithFields implements Form, FieldProvider {
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function render_form( Renderer $renderer ) {
 		$fields_data = $this->get_data();
 
 		$content = $renderer->render( 'form-start', [
 			'method' => 'POST',
-			'action' => ''
+			'action' => '',
 		] );
 
 		foreach ( $this->get_fields() as $field ) {
@@ -130,6 +154,23 @@ class FormWithFields implements Form, FieldProvider {
 		return $content;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function put_data( PersistentContainer $container ) {
+		foreach ( $this->get_fields() as $field ) {
+			$data_key = $field->get_name();
+			if ( ! isset( $this->updated_data[ $data_key ] ) ) {
+				$container->set( $data_key, $field->get_default_value() );
+			} else {
+				$container->set( $data_key, $this->updated_data[ $data_key ] );
+			}
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function get_data() {
 		$data = $this->updated_data;
 
@@ -143,19 +184,23 @@ class FormWithFields implements Form, FieldProvider {
 		return $data;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function get_fields() {
 		return $this->fields;
 	}
 
 	/**
-	 * return form Id
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
 	public function get_form_id() {
 		return $this->form_id;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function get_normalized_data() {
 		return $this->get_data();
 	}
