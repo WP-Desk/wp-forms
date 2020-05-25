@@ -35,7 +35,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	/**
 	 * FormWithFields constructor.
 	 *
-	 * @param array  $fields Form fields.
+	 * @param array $fields Form fields.
 	 * @param string $form_id Unique form id.
 	 */
 	public function __construct( array $fields, $form_id = 'form' ) {
@@ -128,16 +128,14 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Renders only fields without form.
+	 *
+	 * @param Renderer $renderer
+	 *
+	 * @return string
 	 */
-	public function render_form( Renderer $renderer ) {
-		$fields_data = $this->get_data();
-
-		$content = $renderer->render( 'form-start', [
-			'method' => 'POST',
-			'action' => '',
-		] );
-
+	public function render_fields( Renderer $renderer ) {
+		$content = '';
 		foreach ( $this->get_fields() as $field ) {
 			$content .= $renderer->render( $field->should_override_form_template() ? $field->get_template_name() : 'form-field',
 				[
@@ -148,6 +146,22 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 					'template_name' => $field->get_template_name(),
 				] );
 		}
+
+		return $content;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function render_form( Renderer $renderer ) {
+		$fields_data = $this->get_data();
+
+		$content = $renderer->render( 'form-start', [
+			'method' => 'POST',
+			'action' => '',
+		] );
+
+		$content .= $this->render_fields( $renderer );
 
 		$content .= $renderer->render( 'form-end' );
 
