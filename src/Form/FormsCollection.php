@@ -1,26 +1,42 @@
 <?php
 
-namespace WPDesk\Forms;
+namespace WPDesk\Forms\Form;
+
+use WPDesk\Forms\Form;
 
 /**
  * FormsCollection class store AbstractForm instances and merges forms data from all collections
  *
+ * @deprecated Use ony for backward compatibility with Forms 1.x
+ *
  * @package WPDesk\Forms
  */
 class FormsCollection {
-
-
 	/**
 	 * AbstractForm array collection.
 	 *
-	 * @var AbstractForm[]
+	 * @var Form[]
 	 */
 	protected $forms = array();
 
 	/**
+	 * Unique form_id.
+	 *
+	 * @var string
+	 */
+	protected $form_id = 'form';
+
+	/**
+	 * Updated data.
+	 *
+	 * @var array
+	 */
+	protected $updated_data = array();
+
+	/**
 	 * Add forms. All keys in this array must be unique, otherwise add_form will throw exception.
 	 *
-	 * @param AbstractForm[] $forms
+	 * @param Form[] $forms
 	 */
 	public function add_forms( array $forms = array() ) {
 		foreach ( $forms as $form_object ) {
@@ -31,7 +47,7 @@ class FormsCollection {
 	/**
 	 * Add form. If key is not unique throw exception.
 	 *
-	 * @param AbstractForm $form
+	 * @param Form $form
 	 *
 	 * @throws \OutOfBoundsException
 	 */
@@ -59,7 +75,7 @@ class FormsCollection {
 	 *
 	 * @param string $form_id
 	 *
-	 * @return AbstractForm
+	 * @return Form
 	 * @throws \OutOfRangeException
 	 */
 	public function get_form( $form_id ) {
