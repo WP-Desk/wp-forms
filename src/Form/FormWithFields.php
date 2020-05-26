@@ -135,7 +135,8 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 * @return string
 	 */
 	public function render_fields( Renderer $renderer ) {
-		$content = '';
+		$content     = '';
+		$fields_data = $this->get_data();
 		foreach ( $this->get_fields() as $field ) {
 			$content .= $renderer->render( $field->should_override_form_template() ? $field->get_template_name() : 'form-field',
 				[
@@ -154,15 +155,11 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 * @inheritDoc
 	 */
 	public function render_form( Renderer $renderer ) {
-		$fields_data = $this->get_data();
-
 		$content = $renderer->render( 'form-start', [
 			'method' => 'POST',
 			'action' => '',
 		] );
-
 		$content .= $this->render_fields( $renderer );
-
 		$content .= $renderer->render( 'form-end' );
 
 		return $content;
