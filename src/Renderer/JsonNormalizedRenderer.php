@@ -32,6 +32,9 @@ class JsonNormalizedRenderer implements FieldRenderer {
 				'value '   => isset( $fields_data[ $field->get_name() ] ) ? $fields_data[ $field->get_name() ] : $field->get_default_value()
 			];
 
+			if ( $field->has_classes() ) {
+				$rendered['class'] = $field->get_classes();
+			}
 			if ( $field->has_description() ) {
 				$rendered['description'] = $field->get_description();
 			}
