@@ -48,6 +48,17 @@ class JsonNormalizedRenderer implements FieldRenderer {
 			if ( $options ) {
 				$rendered['options'] = $options;
 			}
+			if ( $field->has_data() ) {
+				$data = $field->get_data();
+				$rendered['data'] = [];
+				foreach ( $data as $data_name => $data_value ) {
+					$rendered['data'][] = [
+						'name'  => $data_name,
+						'value' => $data_value,
+					];
+				}
+			}
+
 			$rendered_fields[] = $rendered;
 		}
 
