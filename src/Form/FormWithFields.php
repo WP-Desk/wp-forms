@@ -172,7 +172,9 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		foreach ( $this->get_fields() as $field ) {
 			$data_key = $field->get_name();
 
-			if( empty($data_key) ) continue;
+			if ( empty( $data_key ) ) {
+				continue;
+			}
 
 			if ( ! isset( $this->updated_data[ $data_key ] ) ) {
 				$container->set( $data_key, $field->get_default_value() );
