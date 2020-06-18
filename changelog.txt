@@ -1,2 +1,16 @@
-= 1.0 - 2019-12-16 =
+# Changelog
+
+## 2.0.2 - 2020-06-17
+### Changed
+- Skip saving empty keys in the PersistentContainer
+
+## 2.0.1 - 2020-06-05
+### Changed
+- Stable version of persistent library is used
+
+## 2.0.0 - 2020-05-26
+### Changed
+- Whole library has been rewritten
+
+## 1.0 - 2019-12-16 =
 * First release
