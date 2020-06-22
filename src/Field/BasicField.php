@@ -137,6 +137,17 @@ abstract class BasicField implements Field {
 		return ! empty( $this->meta['class'] );
 	}
 
+	public function has_data() {
+		return ! empty( $this->meta['data'] );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_data() {
+		return empty( $this->meta['data'] ) ? [] : $this->meta['data'];
+	}
+
 	public function get_possible_values() {
 		return isset( $this->meta['possible_values'] ) ? $this->meta['possible_values'] : [];
 	}
@@ -206,6 +217,32 @@ abstract class BasicField implements Field {
 	 */
 	public function unset_class( $class_name ) {
 		unset( $this->meta['class'][ $class_name ] );
+
+		return $this;
+	}
+
+	/**
+	 * @param string $data_name
+	 * @param string $data_value
+	 *
+	 * @return $this
+	 */
+	public function add_data( $data_name, $data_value ) {
+		if ( !isset( $this->meta['data'] ) ) {
+			$this->meta['data'] = [];
+		}
+		$this->meta['data'][ $data_name ] = $data_value;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $data_name
+	 *
+	 * @return $this
+	 */
+	public function unset_data( $data_name ) {
+		unset( $this->meta['data'][ $data_name ] );
 
 		return $this;
 	}

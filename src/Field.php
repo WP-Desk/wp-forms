@@ -2,6 +2,8 @@
 
 namespace WPDesk\Forms;
 
+use WPDesk\Forms\Field\BasicField;
+
 /**
  * The idea is that from the moment the factory returns this interface it's values cannot be changed.
  * And that is why here are only the getters.
@@ -115,6 +117,29 @@ interface Field {
 
 	/** @return bool */
 	public function is_class_set( $name );
+
+	/** bool */
+	public function has_data();
+
+	/**
+	 * @return array
+	 */
+	public function get_data();
+
+	/**
+	 * @param string $data_name
+	 * @param string $data_value
+	 *
+	 * @return $this
+	 */
+	public function add_data( $data_name, $data_value );
+
+	/**
+	 * @param string $data_name
+	 *
+	 * @return $this
+	 */
+	public function unset_data( $data_name );
 
 	/**
 	 * @return mixed
