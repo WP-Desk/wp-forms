@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use WPDesk\Forms\AbstractForm;
-use WPDesk\Forms\FormsCollection;
+use WPDesk\Forms\Form\AbstractForm;
+use WPDesk\Forms\Form\FormsCollection;
 
 class TestFormCollection extends \PHPUnit\Framework\TestCase {
 
