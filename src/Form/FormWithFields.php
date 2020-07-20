@@ -13,6 +13,8 @@ use WPDesk\Persistence\PersistentContainer;
 use WPDesk\View\Renderer\Renderer;
 
 class FormWithFields implements Form, ContainerForm, FieldProvider {
+	use Field\Traits\HtmlAttributes;
+
 	/**
 	 * Unique form_id.
 	 *
@@ -42,6 +44,42 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		$this->fields       = $fields;
 		$this->form_id      = $form_id;
 		$this->updated_data = null;
+	}
+
+	/**
+	 * Set Form action attribute.
+	 *
+	 * @param string $action
+	 */
+	public function set_action( $action ) {
+		$this->attributes['action'] = $action;
+
+		return $this;
+	}
+
+	/**
+	 * Set Form method attribute ie. GET/POST.
+	 *
+	 * @param string $method
+	 */
+	public function set_method( $method ) {
+		$this->attributes['method'] = $method;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_method() {
+		return isset( $this->attributes['method'] ) ? $this->attributes['method'] : 'POST';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_action() {
+		return isset( $this->attributes['action'] ) ? $this->attributes['action'] : '';
 	}
 
 	/**
@@ -156,8 +194,9 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 */
 	public function render_form( Renderer $renderer ) {
 		$content = $renderer->render( 'form-start', [
-			'method' => 'POST',
-			'action' => '',
+			'form'   => $this,
+			'method' => $this->get_method(), // backward compat
+			'action' => $this->get_action(),  // backward compat
 		] );
 		$content .= $this->render_fields( $renderer );
 		$content .= $renderer->render( 'form-end' );
