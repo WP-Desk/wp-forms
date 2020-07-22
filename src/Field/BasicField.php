@@ -16,9 +16,7 @@ use WPDesk\Forms\Validator\RequiredValidator;
  * @package WPDesk\Forms
  */
 abstract class BasicField implements Field {
-
-	/** @var array[] */
-	protected $attributes;
+	use Field\Traits\HtmlAttributes;
 
 	/** @var array[] */
 	protected $meta;
@@ -117,12 +115,6 @@ abstract class BasicField implements Field {
 		$this->attributes['name'] = $name;
 
 		return $this;
-	}
-
-	public function get_attributes( $except = [] ) {
-		return array_filter( $this->attributes, function ( $value, $key ) use ( $except ) {
-			return ! in_array( $key, $except );
-		}, ARRAY_FILTER_USE_BOTH );
 	}
 
 	public function get_meta_value( $name ) {
@@ -247,28 +239,6 @@ abstract class BasicField implements Field {
 		return $this;
 	}
 
-	/**
-	 * @param $name
-	 * @param $value
-	 *
-	 * @return $this
-	 */
-	public function set_attribute( $name, $value ) {
-		$this->attributes[ $name ] = $value;
-
-		return $this;
-	}
-
-	public function unset_attribute( $name ) {
-		unset( $this->attributes[ $name ] );
-
-		return $this;
-	}
-
-	public function is_attribute_set( $name ) {
-		return isset( $this->attributes[ $name ] );
-	}
-
 	public function is_meta_value_set( $name ) {
 		return isset( $this->meta[ $name ] );
 	}
@@ -306,10 +276,6 @@ abstract class BasicField implements Field {
 
 	public function is_required() {
 		return isset( $this->meta['required'] ) ? $this->meta['required'] : false;
-	}
-
-	public function get_attribute( $name, $default = null ) {
-		return isset( $this->attributes[ $name ] ) ?: $default;
 	}
 
 	public function get_sanitizer() {

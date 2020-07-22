@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use WPDesk\Forms\AbstractForm;
+use WPDesk\Forms\Form\AbstractForm;
 
 class TestForm extends \PHPUnit\Framework\TestCase
 {
