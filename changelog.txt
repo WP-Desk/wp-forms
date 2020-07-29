@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.2.0] - 2020-07-30
+### Added
+- Date picker field
+
 ## [2.1.0] - 2020-07-17
 ### Added
 - Action/method attribute for form
