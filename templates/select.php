@@ -2,7 +2,7 @@
 /**
  * @var \WPDesk\Forms\Field $field
  * @var string $name_prefix
- * @var string $value
+ * @var mixed $value
  */
 ?>
 <select
@@ -22,7 +22,7 @@
 
 	<?php foreach ( $field->get_possible_values() as $possible_value => $label ): ?>
 		<option
-			<?php if ( $possible_value === $value || (is_numeric($possible_value) && is_numeric($value) && (int) $possible_value === (int) $value )): ?>selected="selected"<?php endif; ?>
+			<?php if ( $possible_value === $value || (is_array($value) && in_array($possible_value, $value)) || (is_numeric($possible_value) && is_numeric($value) && (int) $possible_value === (int) $value )): ?>selected="selected"<?php endif; ?>
 			value="<?php echo esc_attr( $possible_value ); ?>"
 		><?php echo esc_html( $label ); ?></option>
 	<?php endforeach; ?>
