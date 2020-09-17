@@ -1,9 +1,9 @@
 <?php
 
-namespace DropshippingXmlVendor\WPDesk\Forms\Field;
+namespace WPDesk\Forms\Field;
 
-use DropshippingXmlVendor\WPDesk\Forms\Sanitizer\TextFieldSanitizer;
-class InputNumberField extends \DropshippingXmlVendor\WPDesk\Forms\Field\BasicField
+use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
+class InputNumberField extends WPDesk\Forms\Field\BasicField
 {
     public function __construct()
     {
@@ -13,7 +13,7 @@ class InputNumberField extends \DropshippingXmlVendor\WPDesk\Forms\Field\BasicFi
     }
     public function get_sanitizer()
     {
-        return new \DropshippingXmlVendor\WPDesk\Forms\Sanitizer\TextFieldSanitizer();
+        return new WPDesk\Forms\Sanitizer\TextFieldSanitizer();
     }
     public function get_template_name()
     {
