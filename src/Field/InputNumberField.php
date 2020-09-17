@@ -13,7 +13,7 @@ class InputNumberField extends WPDesk\Forms\Field\BasicField
     }
     public function get_sanitizer()
     {
-        return new WPDesk\Forms\Sanitizer\TextFieldSanitizer();
+        return new TextFieldSanitizer();
     }
     public function get_template_name()
     {
