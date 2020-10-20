@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.1] - 2020-10-20
+### Fixed
+- JsonNormalizedRenderer now renders only fields that can be converted to json
+
 ## [2.3] - 2020-10-15
 ### Added
 - Added Timepicker field

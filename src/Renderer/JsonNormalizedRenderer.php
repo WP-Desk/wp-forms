@@ -58,8 +58,9 @@ class JsonNormalizedRenderer implements FieldRenderer {
 					];
 				}
 			}
-
-			$rendered_fields[] = $rendered;
+			if (json_encode($rendered) !== false) {
+				$rendered_fields[] = $rendered;
+			}
 		}
 
 		return $rendered_fields;
