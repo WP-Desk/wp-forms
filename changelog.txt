@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.0] - 2021-01-20
+### Added
+- Support for persistence ^3
+
 ## [2.3.2] - 2020-11-30
 ### Fixed
 - Fixed bug with the double name & type attribute

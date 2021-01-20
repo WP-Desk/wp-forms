@@ -14,7 +14,7 @@
     "php": ">=5.6",
     "ext-curl": "*",
     "ext-json": "*",
-    "wpdesk/wp-persistence": "^2.0",
+    "wpdesk/wp-persistence": "^2.0|^3.0",
     "wpdesk/wp-view": "^1.1"
   },
   "require-dev": {
