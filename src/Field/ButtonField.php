@@ -1,8 +1,8 @@
 <?php
 
-namespace DropshippingXmlVendor\WPDesk\Forms\Field;
+namespace WPDesk\Forms\Field;
 
-class ButtonField extends \DropshippingXmlVendor\WPDesk\Forms\Field\NoValueField
+class ButtonField extends NoValueField
 {
     public function get_template_name()
     {
