@@ -117,7 +117,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 */
 	public function is_valid() {
 		foreach ( $this->fields as $field ) {
-			$field_value     = isset( $this->updated_data[ $field->get_name() ] ) ? $this->updated_data[ $field->get_name() ] : null;
+			$field_value     = isset( $this->updated_data[ $field->get_name() ] ) ? $this->updated_data[ $field->get_name() ] : $field->get_default_value();
 			$field_validator = $field->get_validator();
 			if ( ! $field_validator->is_valid( $field_value ) ) {
 				return false;
