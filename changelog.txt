@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.4] - 2021-04-26
+### Fixed
+- Added description_tip to Renderer
+
 ## [2.4.2] - 2021-03-10
 ### Fixed
 - When no value is provided use default in validation
