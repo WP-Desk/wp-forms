@@ -38,6 +38,9 @@ class JsonNormalizedRenderer implements FieldRenderer {
 			if ( $field->has_description() ) {
 				$rendered['description'] = $field->get_description();
 			}
+			if ( $field->has_description_tip() ) {
+				$rendered['description_tip'] = $field->get_description_tip();
+			}
 			if ( $field->has_label() ) {
 				$rendered['label'] = $field->get_label();
 			}
