@@ -4,8 +4,7 @@
  * @var string              $name_prefix
  * @var string              $value
  */
-?>
-<?php
+
 $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 ?>
 <div class="media-input-wrapper" id="<?php echo $media_container_id; ?>">
@@ -18,14 +17,10 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 		<?php endif; ?>
     </div>
     <p class="hide-if-no-js">
-        <a class="upload-custom-img <?php if ( $value ) {
-			echo 'hidden';
-		} ?>" href="<?php echo $value ?>">
+        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo $value ?>">
 			<?php _e( 'Set image', 'wp-forms' ) ?>
         </a>
-        <a class="delete-custom-img <?php if ( ! $value ) {
-			echo 'hidden';
-		} ?>" href="#">
+        <a class="delete-custom-img <?php if ( ! $value ): ?>hidden<?php endif ?>" href="#">
 			<?php _e( 'Remove image', 'wp-forms' ) ?>
         </a>
     </p>
