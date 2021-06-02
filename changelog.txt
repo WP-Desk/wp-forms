@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.4.5] - 2021-06-02
+### Fixed
+- Added text multiple field
+- Added image input field
+
 ## [2.4.4] - 2021-04-26
 ### Fixed
 - Added description_tip to Renderer
