@@ -61,9 +61,9 @@ trait HtmlAttributes {
 	 * @param string $name
 	 * @param mixed $default
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function get_attribute( $name, $default = null ) {
-		return isset( $this->attributes[ $name ] ) ?: $default;
+		return $this->attributes[ $name ] ?? $default;
 	}
 }
