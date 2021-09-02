@@ -298,4 +298,15 @@ abstract class BasicField implements Field {
 
 		return $this;
 	}
+
+	/** @return int */
+	public function get_priority() {
+		return $this->meta['priority'] ?? 10;
+	}
+
+	public function set_priority( int $priority ) {
+		$this->meta['priority'] = $priority;
+
+		return $this;
+	}
 }
