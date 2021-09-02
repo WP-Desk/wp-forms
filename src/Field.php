@@ -163,4 +163,7 @@ interface Field {
 
 	/** @return Serializer */
 	public function get_serializer();
+
+	/** @return int */
+	public function get_priority();
 }
