@@ -21,10 +21,13 @@ class FormWithFieldsTest extends TestCase {
 		$this->form->add_fields(
 			[
 				( new InputTextField() )
-				->set_label('third'),
+				->set_label('fourth'),
 				( new SelectField() )
 				->set_label('second')
 				->set_priority(5),
+				( new SelectField() )
+				->set_label('third')
+				->set_priority(7),
 				( new InputNumberField() )
 				->set_label('first')
 				->set_priority(1)
@@ -38,8 +41,11 @@ class FormWithFieldsTest extends TestCase {
 			( new SelectField() )
 			->set_label('second')
 			->set_priority(5),
-			( new InputTextField() )
+			( new SelectField() )
 			->set_label('third')
+			->set_priority(7),
+			( new InputTextField() )
+			->set_label('fourth')
 		];
 
 		self::assertEquals($expected, $this->form->get_fields());

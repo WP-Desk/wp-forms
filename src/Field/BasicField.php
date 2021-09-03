@@ -3,6 +3,7 @@
 namespace WPDesk\Forms\Field;
 
 use WPDesk\Forms\Field;
+use WPDesk\Forms\Form\FormWithFields;
 use WPDesk\Forms\Sanitizer\NoSanitize;
 use WPDesk\Forms\Serializer;
 use WPDesk\Forms\Serializer\NoSerialize;
@@ -25,6 +26,7 @@ abstract class BasicField implements Field {
 
 	public function __construct() {
 		$this->meta['class'] = [];
+		$this->meta['priority'] = 10;
 	}
 
 	public function get_label() {
@@ -299,12 +301,16 @@ abstract class BasicField implements Field {
 		return $this;
 	}
 
-	/** @return int */
-	public function get_priority() {
-		return $this->meta['priority'] ?? 10;
+	public function get_priority(): int {
+		return $this->meta['priority'];
 	}
 
-	public function set_priority( int $priority ) {
+	/**
+	 * Fields are sorted by lowest priority value first, when getting FormWithFields
+	 *
+	 * @see FormWithFields::get_fields()
+	 */
+	public function set_priority( int $priority ): self {
 		$this->meta['priority'] = $priority;
 
 		return $this;
