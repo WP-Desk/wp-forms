@@ -243,7 +243,16 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 * @inheritDoc
 	 */
 	public function get_fields() {
-		return $this->fields;
+		$fields = $this->fields;
+
+		usort(
+			$fields,
+			static function ( Field $a, Field $b ) {
+				return $a->get_priority() <=> $b->get_priority();
+			}
+		);
+
+		return $fields;
 	}
 
 	/**
