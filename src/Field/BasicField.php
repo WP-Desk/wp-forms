@@ -4,9 +4,11 @@ namespace WPDesk\Forms\Field;
 
 use WPDesk\Forms\Field;
 use WPDesk\Forms\Form\FormWithFields;
+use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\NoSanitize;
 use WPDesk\Forms\Serializer;
 use WPDesk\Forms\Serializer\NoSerialize;
+use WPDesk\Forms\Validator;
 use WPDesk\Forms\Validator\ChainValidator;
 use WPDesk\Forms\Validator\RequiredValidator;
 
@@ -19,210 +21,165 @@ use WPDesk\Forms\Validator\RequiredValidator;
 abstract class BasicField implements Field {
 	use Field\Traits\HtmlAttributes;
 
-	/** @var array[] */
+	const DEFAULT_PRIORITY = 10;
+
+	/** @var array<string,int,bool> */
 	protected $meta;
 
+	/** @var string */
 	protected $default_value;
 
 	public function __construct() {
-		$this->meta['class'] = [];
-		$this->meta['priority'] = 10;
+		$this->meta['class']    = [];
+		$this->meta['priority'] = self::DEFAULT_PRIORITY;
 	}
 
-	public function get_label() {
+	public function get_label(): string {
 		return $this->meta['label'];
 	}
 
-	/**
-	 * @param string $value
-	 *
-	 * @return $this
-	 */
-	public function set_label( $value ) {
+	public function set_label( string $value ): self {
 		$this->meta['label'] = $value;
 
 		return $this;
 	}
 
-	public function get_description_tip() {
+	public function get_description_tip(): string {
 		return $this->meta['description_tip'];
 	}
 
-	public function has_description_tip() {
+	public function has_description_tip(): bool {
 		return isset( $this->meta['description_tip'] );
 	}
 
-	public function should_override_form_template() {
-		return isset( $this->attributes['overrite_template'] ) ? $this->attributes['overrite_template'] : false;
+	public function should_override_form_template(): bool {
+		return $this->attributes['overrite_template'] ?? false;
 	}
 
-	public function get_description() {
+	public function get_description(): string {
 		return $this->meta['description'];
 	}
 
-	public function has_label() {
+	public function has_label(): bool {
 		return isset( $this->meta['label'] );
 	}
 
-	public function has_description() {
+	public function has_description(): bool {
 		return isset( $this->meta['description'] );
 	}
 
-	public function set_description( $value ) {
+	public function set_description( string $value ): self {
 		$this->meta['description'] = $value;
 
 		return $this;
 	}
 
-	public function set_description_tip( $value ) {
+	public function set_description_tip( string $value ): self {
 		$this->meta['description_tip'] = $value;
 
 		return $this;
 	}
 
-	/**
-	 * @return array
-	 *
-	 * @deprecated not sure if needed. TODO: Check later.
-	 */
-	public function get_type() {
+	public function get_type(): string {
 		return $this->attributes['type'];
 	}
 
-	/**
-	 * @param string $value
-	 *
-	 * @return $this
-	 */
-	public function set_placeholder( $value ) {
+	public function set_placeholder( string $value ): self {
 		$this->meta['placeholder'] = $value;
 
 		return $this;
 	}
 
-	public function has_placeholder() {
+	public function has_placeholder(): bool {
 		return isset( $this->meta['placeholder'] );
 	}
 
-	public function get_placeholder() {
+	public function get_placeholder(): string {
 		return $this->meta['placeholder'];
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return $this
-	 */
-	public function set_name( $name ) {
+	public function set_name( string $name ): self {
 		$this->attributes['name'] = $name;
 
 		return $this;
 	}
 
-	public function get_meta_value( $name ) {
+	public function get_meta_value( string $name ): string {
 		return $this->meta[ $name ];
 	}
 
-	public function get_classes() {
+	public function get_classes(): string {
 		return implode( ' ', $this->meta['class'] );
 	}
 
-	public function has_classes() {
+	public function has_classes(): bool {
 		return ! empty( $this->meta['class'] );
 	}
 
-	public function has_data() {
+	public function has_data(): bool {
 		return ! empty( $this->meta['data'] );
 	}
 
-	/**
-	 * @return array
-	 */
-	public function get_data() {
-		return empty( $this->meta['data'] ) ? [] : $this->meta['data'];
+	public function get_data(): array {
+		return $this->meta['data'] ?: [];
 	}
 
 	public function get_possible_values() {
 		return isset( $this->meta['possible_values'] ) ? $this->meta['possible_values'] : [];
 	}
 
-	public function get_id() {
-		return isset( $this->attributes['id'] ) ? $this->attributes['id'] : sanitize_title( $this->get_name() );
+	public function get_id(): string {
+		return $this->attributes['id'] ?? sanitize_title( $this->get_name() );
 	}
 
-	public function get_name() {
+	public function get_name(): string {
 		return $this->attributes['name'];
 	}
 
-	public function is_multiple() {
-		return isset( $this->attributes['multiple'] ) ? $this->attributes['multiple'] : false;
+	public function is_multiple(): bool {
+		return $this->attributes['multiple'] ?? false;
 	}
 
-	/**
-	 * @return $this
-	 */
-	public function set_disabled() {
+	public function set_disabled(): self {
 		$this->attributes['disabled'] = true;
 
 		return $this;
 	}
 
-	public function is_disabled() {
-		return isset( $this->attributes['disabled'] ) ? $this->attributes['disabled'] : false;
+	public function is_disabled(): bool {
+		return $this->attributes['disabled'] ?? false;
 	}
 
-	/**
-	 * @return $this
-	 */
-	public function set_readonly() {
+	public function set_readonly(): self {
 		$this->attributes['readonly'] = true;
 
 		return $this;
 	}
 
-	public function is_readonly() {
-		return isset( $this->attributes['readonly'] ) ? $this->attributes['readonly'] : false;
+	public function is_readonly(): bool {
+		return $this->attributes['readonly'] ?? false;
 	}
 
-	/**
-	 * @return $this
-	 */
-	public function set_required() {
+	public function set_required(): self {
 		$this->meta['required'] = true;
 
 		return $this;
 	}
 
-	/**
-	 * @param string $class_name
-	 *
-	 * @return $this
-	 */
-	public function add_class( $class_name ) {
+	public function add_class( string $class_name ): self {
 		$this->meta['class'][ $class_name ] = $class_name;
 
 		return $this;
 	}
 
-	/**
-	 * @param string $class_name
-	 *
-	 * @return $this
-	 */
-	public function unset_class( $class_name ) {
+	public function unset_class( string $class_name ): self {
 		unset( $this->meta['class'][ $class_name ] );
 
 		return $this;
 	}
 
-	/**
-	 * @param string $data_name
-	 * @param string $data_value
-	 *
-	 * @return $this
-	 */
-	public function add_data( $data_name, $data_value ) {
-		if ( !isset( $this->meta['data'] ) ) {
+	public function add_data( string $data_name, string $data_value ): self {
+		if ( ! isset( $this->meta['data'] ) ) {
 			$this->meta['data'] = [];
 		}
 		$this->meta['data'][ $data_name ] = $data_value;
@@ -230,44 +187,31 @@ abstract class BasicField implements Field {
 		return $this;
 	}
 
-	/**
-	 * @param string $data_name
-	 *
-	 * @return $this
-	 */
-	public function unset_data( $data_name ) {
+	public function unset_data( string $data_name ): self {
 		unset( $this->meta['data'][ $data_name ] );
 
 		return $this;
 	}
 
-	public function is_meta_value_set( $name ) {
+	public function is_meta_value_set( string $name ): bool {
 		return isset( $this->meta[ $name ] );
 	}
 
-	public function is_class_set( $name ) {
+	public function is_class_set( string $name ): bool {
 		return isset( $this->meta['class'][ $name ] );
 	}
 
-	public function get_default_value() {
+	public function get_default_value(): string {
 		return $this->default_value;
 	}
 
-	/**
-	 * @param string $value
-	 *
-	 * @return $this
-	 */
-	public function set_default_value( $value ) {
+	public function set_default_value( string $value ): self {
 		$this->default_value = $value;
 
 		return $this;
 	}
 
-	/**
-	 * @return ChainValidator
-	 */
-	public function get_validator() {
+	public function get_validator(): Validator {
 		$chain = new ChainValidator();
 		if ( $this->is_required() ) {
 			$chain->attach( new RequiredValidator() );
@@ -276,18 +220,15 @@ abstract class BasicField implements Field {
 		return $chain;
 	}
 
-	public function is_required() {
-		return isset( $this->meta['required'] ) ? $this->meta['required'] : false;
+	public function is_required(): bool {
+		return $this->meta['required'] ?? false;
 	}
 
-	public function get_sanitizer() {
+	public function get_sanitizer(): Sanitizer {
 		return new NoSanitize();
 	}
 
-	/**
-	 * @return Serializer
-	 */
-	public function get_serializer() {
+	public function get_serializer(): Serializer {
 		if ( isset( $this->meta['serializer'] ) && $this->meta['serializer'] instanceof Serializer ) {
 			return $this->meta['serializer'];
 		}
@@ -295,7 +236,7 @@ abstract class BasicField implements Field {
 		return new NoSerialize();
 	}
 
-	public function set_serializer( Serializer $serializer ) {
+	public function set_serializer( Serializer $serializer ): self {
 		$this->meta['serializer'] = $serializer;
 
 		return $this;

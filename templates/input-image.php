@@ -8,22 +8,30 @@
 $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 ?>
 <div class="media-input-wrapper" id="<?php echo $media_container_id; ?>">
-    <input type="hidden" class="image-field-value" value="<?php echo \esc_html( $value ); ?>"
-           name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
-           id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
-    <div class="custom-img-container">
+	<input type="hidden" class="image-field-value" value="<?php echo \esc_html( $value ); ?>"
+		   name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
+		   id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
+	<div class="custom-img-container">
 		<?php if ( $value ) : ?>
-            <img src="<?php echo $value ?>" alt="" width="100"/>
+			<img src="<?php echo $value; ?>" alt="" width="100"/>
 		<?php endif; ?>
-    </div>
-    <p class="hide-if-no-js">
-        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo $value ?>">
-			<?php _e( 'Set image', 'wp-forms' ) ?>
-        </a>
-        <a class="delete-custom-img <?php if ( ! $value ): ?>hidden<?php endif ?>" href="#">
-			<?php _e( 'Remove image', 'wp-forms' ) ?>
-        </a>
-    </p>
+	</div>
+	<p class="hide-if-no-js">
+		<a class="upload-custom-img 
+		<?php
+		if ( $value ) :
+			?>
+			hidden<?php endif ?>" href="<?php echo $value; ?>">
+			<?php _e( 'Set image', 'wp-forms' ); ?>
+		</a>
+		<a class="delete-custom-img 
+		<?php
+		if ( ! $value ) :
+			?>
+			hidden<?php endif ?>" href="#">
+			<?php _e( 'Remove image', 'wp-forms' ); ?>
+		</a>
+	</p>
 </div>
 <script>
 	jQuery( function ( $ ) {

@@ -4,17 +4,18 @@ namespace WPDesk\Forms\Field;
 
 class SelectField extends BasicField {
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'select';
 	}
 
-	public function set_options( $options ) {
+	/** @param string[] $options */
+	public function set_options( array $options ): self {
 		$this->meta['possible_values'] = $options;
 
 		return $this;
 	}
 
-	public function set_multiple() {
+	public function set_multiple(): self {
 		$this->attributes['multiple'] = true;
 
 		return $this;

@@ -19,51 +19,39 @@ trait HtmlAttributes {
 	 *
 	 * @return string[]
 	 */
-	public function get_attributes( $except = [ 'name', 'type' ] ) {
-		return array_filter( $this->attributes, function ( $value, $key ) use ( $except ) {
-			return ! in_array( $key, $except, true );
-		}, ARRAY_FILTER_USE_BOTH );
+	public function get_attributes( array $except = [ 'name', 'type' ] ): array {
+		return array_filter(
+			$this->attributes,
+			static function ( $value, $key ) use ( $except ) {
+				return ! in_array( $key, $except, true );
+			},
+			ARRAY_FILTER_USE_BOTH
+		);
 	}
 
-	/**
-	 * @param string $name
-	 * @param string $value
-	 *
-	 * @return $this
-	 */
-	public function set_attribute( $name, $value ) {
+	public function set_attribute( string $name, string $value ): self {
 		$this->attributes[ $name ] = $value;
 
 		return $this;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return $this
-	 */
-	public function unset_attribute( $name ) {
+	public function unset_attribute( string $name ): self {
 		unset( $this->attributes[ $name ] );
 
 		return $this;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	public function is_attribute_set( $name ) {
+	public function is_attribute_set( string $name ): bool {
 		return isset( $this->attributes[ $name ] );
 	}
 
 	/**
-	 * @param string $name
-	 * @param mixed $default
+	 * @param string  $name
+	 * @param ?string $default
 	 *
 	 * @return string
 	 */
-	public function get_attribute( $name, $default = null ) {
+	public function get_attribute( string $name, $default = null ): string {
 		return $this->attributes[ $name ] ?? $default;
 	}
 }

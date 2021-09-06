@@ -10,10 +10,10 @@ $classes     = $field->has_classes() ? 'class="' . $field->get_classes() . '"' :
 
 ?>
 
-<?php if ( $field->has_label() ): ?>
+<?php if ( $field->has_label() ) : ?>
 	<h<?php echo $header_size; ?> <?php echo $classes; ?>><?php echo esc_html( $field->get_label() ); ?></h<?php echo $header_size; ?>>
 <?php endif; ?>
 
-<?php if ( $field->has_description() ): ?>
+<?php if ( $field->has_description() ) : ?>
 	<p <?php echo $classes; ?>><?php echo wp_kses_post( $field->get_description() ); ?></p>
 <?php endif; ?>

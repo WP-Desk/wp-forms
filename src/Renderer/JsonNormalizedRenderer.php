@@ -18,7 +18,7 @@ class JsonNormalizedRenderer implements FieldRenderer {
 	 *
 	 * @return array Normalized fields with data.
 	 */
-	public function render_fields( FieldProvider $provider, array $fields_data, $name_prefix = '' ) {
+	public function render_fields( FieldProvider $provider, array $fields_data, string $name_prefix = '' ): array {
 		$rendered_fields = [];
 		foreach ( $provider->get_fields() as $field ) {
 			$rendered = [
@@ -29,7 +29,7 @@ class JsonNormalizedRenderer implements FieldRenderer {
 				'readonly' => $field->is_readonly(),
 				'required' => $field->is_required(),
 				'prefix'   => $name_prefix,
-				'value '   => isset( $fields_data[ $field->get_name() ] ) ? $fields_data[ $field->get_name() ] : $field->get_default_value()
+				'value '   => isset( $fields_data[ $field->get_name() ] ) ? $fields_data[ $field->get_name() ] : $field->get_default_value(),
 			];
 
 			if ( $field->has_classes() ) {
@@ -52,7 +52,7 @@ class JsonNormalizedRenderer implements FieldRenderer {
 				$rendered['options'] = $options;
 			}
 			if ( $field->has_data() ) {
-				$data = $field->get_data();
+				$data             = $field->get_data();
 				$rendered['data'] = [];
 				foreach ( $data as $data_name => $data_value ) {
 					$rendered['data'][] = [
@@ -61,7 +61,7 @@ class JsonNormalizedRenderer implements FieldRenderer {
 					];
 				}
 			}
-			if (json_encode($rendered) !== false) {
+			if ( json_encode( $rendered ) !== false ) {
 				$rendered_fields[] = $rendered;
 			}
 		}

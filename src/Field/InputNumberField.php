@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms\Field;
 
+use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
 
 class InputNumberField extends BasicField {
@@ -11,11 +12,11 @@ class InputNumberField extends BasicField {
 		$this->set_attribute( 'type', 'number' );
 	}
 
-	public function get_sanitizer() {
+	public function get_sanitizer(): Sanitizer {
 		return new TextFieldSanitizer();
 	}
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'input-number';
 	}
 }

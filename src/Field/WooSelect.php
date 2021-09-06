@@ -9,7 +9,7 @@ class WooSelect extends SelectField {
 		$this->add_class( 'wc-enhanced-select' );
 	}
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'woo-select';
 	}
 }

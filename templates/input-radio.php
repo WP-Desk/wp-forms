@@ -6,12 +6,15 @@
  * @var string $value
  *
  * @var string $template_name Real field template.
- *
  */
 ?>
-<?php echo $renderer->render('input', [
-	'field' => $field,
-	'renderer' => $renderer,
-	'name_prefix' => $name_prefix,
-	'value' => $value,
-]); ?>
+<?php
+echo $renderer->render(
+	'input',
+	[
+		'field'       => $field,
+		'renderer'    => $renderer,
+		'name_prefix' => $name_prefix,
+		'value'       => $value,
+	]
+);
