@@ -10,9 +10,6 @@ use WPDesk\Forms\Serializer;
  * @package WPDesk\Forms\Serializer
  */
 class ProductSelectSerializer implements Serializer {
-	/**
-	 * @param $value
-	 */
 	public function serialize( $value ) {
 		$products_with_names = [];
 		if ( is_array( $value ) ) {

@@ -12,6 +12,7 @@ use WPDesk\Persistence\PersistentContainer;
  * @package WPDesk\Forms
  */
 class FieldPersistenceStrategy {
+
 	/** @var PersistentContainer */
 	private $persistence;
 
@@ -21,9 +22,6 @@ class FieldPersistenceStrategy {
 
 	/**
 	 * Save fields data.
-	 *
-	 * @param FieldProvider $fields_provider
-	 * @param array $data
 	 */
 	public function persist_fields( FieldProvider $fields_provider, array $data ) {
 		foreach ( $fields_provider->get_fields() as $field ) {
@@ -34,10 +32,8 @@ class FieldPersistenceStrategy {
 
 	/**
 	 * Load fields data.
-	 *
-	 * @return array
 	 */
-	public function load_fields( FieldProvider $fields_provider ) {
+	public function load_fields( FieldProvider $fields_provider ): array {
 		$data = [];
 		foreach ( $fields_provider->get_fields() as $field ) {
 			$field_key = $field->get_name();
@@ -45,7 +41,7 @@ class FieldPersistenceStrategy {
 				$data[ $field_key ] = $field->get_serializer()->unserialize( $this->persistence->get( $field_key ) );
 			} catch ( NotFoundExceptionInterface $not_found ) {
 				// TODO: Logger
-//				LoggerFactory::get_logger()->info( "FieldPersistenceStrategy:: Field {$field_key} not found" );
+				// LoggerFactory::get_logger()->info( "FieldPersistenceStrategy:: Field {$field_key} not found" );
 			}
 		}
 

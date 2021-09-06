@@ -13,14 +13,14 @@
 
 <?php
 $id              = uniqid( 'wyswig_' );
-$editor_settings = array(
-	'textarea_name' => esc_attr( $name_prefix ) . '[' . esc_attr( $field->get_name() ) . ']'
-);
+$editor_settings = [
+	'textarea_name' => esc_attr( $name_prefix ) . '[' . esc_attr( $field->get_name() ) . ']',
+];
 
 wp_editor( wp_kses_post( $value ), $id, $editor_settings );
 ?>
 <script type="text/javascript">
 	(function () {
-		ShopMagic.wyswig.init('<?php echo $id; ?>');
+		ShopMagic.wyswig.init('<?php echo esc_attr( $id ); ?>');
 	}());
 </script>

@@ -5,9 +5,11 @@ namespace WPDesk\Forms\Validator;
 use WPDesk\Forms\Validator;
 
 class ChainValidator implements Validator {
+
 	/** @var Validator[] */
 	private $validators;
 
+	/** @var array */
 	private $messages;
 
 	public function __construct() {
@@ -20,13 +22,13 @@ class ChainValidator implements Validator {
 	 *
 	 * @return $this
 	 */
-	public function attach( Validator $validator ) {
+	public function attach( Validator $validator ): self {
 		$this->validators[] = $validator;
 
 		return $this;
 	}
 
-	public function is_valid( $value ) {
+	public function is_valid( $value ): bool {
 		$result   = true;
 		$messages = [ [] ];
 		foreach ( $this->validators as $validator ) {
@@ -40,7 +42,7 @@ class ChainValidator implements Validator {
 		return $result;
 	}
 
-	public function get_messages() {
+	public function get_messages(): array {
 		return $this->messages;
 	}
 

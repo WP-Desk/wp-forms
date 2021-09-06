@@ -8,15 +8,15 @@ class Header extends NoValueField {
 		$this->meta['header_size'] = '';
 	}
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'header';
 	}
 
-	public function should_override_form_template() {
+	public function should_override_form_template(): bool {
 		return true;
 	}
 
-	public function set_header_size( $value ) {
+	public function set_header_size( int $value ): self {
 		$this->meta['header_size'] = $value;
 
 		return $this;

@@ -8,7 +8,7 @@ class TextAreaField extends BasicField {
 		$this->set_default_value( '' );
 	}
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'textarea';
 	}
 }

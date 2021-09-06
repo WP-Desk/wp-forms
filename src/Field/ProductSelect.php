@@ -8,7 +8,7 @@ class ProductSelect extends SelectField {
 		$this->set_multiple();
 	}
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'product-select';
 	}
 }

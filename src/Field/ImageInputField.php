@@ -10,10 +10,7 @@ class ImageInputField extends BasicField {
 		$this->set_attribute( 'type', 'text' );
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'input-image';
 	}
 }

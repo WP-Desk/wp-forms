@@ -15,91 +15,58 @@ use WPDesk\View\Renderer\Renderer;
 class FormWithFields implements Form, ContainerForm, FieldProvider {
 	use Field\Traits\HtmlAttributes;
 
-	/**
-	 * Unique form_id.
-	 *
-	 * @var string
-	 */
+	/** @var string Unique form_id. */
 	protected $form_id = 'form';
-	/**
-	 * Updated data.
-	 *
-	 * @var array
-	 */
+
+	/** @var array Updated data. */
 	private $updated_data;
-	/**
-	 * Form fields.
-	 *
-	 * @var Field[]
-	 */
+
+	/** @var Field[] Form fields. */
 	private $fields;
 
 	/**
 	 * FormWithFields constructor.
 	 *
-	 * @param array $fields Form fields.
-	 * @param string $form_id Unique form id.
+	 * @param Field[]  $fields
+	 * @param string $form_id
 	 */
-	public function __construct( array $fields, $form_id = 'form' ) {
-		$this->fields       = $fields;
-		$this->form_id      = $form_id;
-		$this->updated_data = null;
+	public function __construct( array $fields, string $form_id = 'form' ) {
+		$this->fields  = $fields;
+		$this->form_id = $form_id;
 	}
 
-	/**
-	 * Set Form action attribute.
-	 *
-	 * @param string $action
-	 */
-	public function set_action( $action ) {
+	/** Set Form action attribute. */
+	public function set_action( string $action ): self {
 		$this->attributes['action'] = $action;
 
 		return $this;
 	}
 
-	/**
-	 * Set Form method attribute ie. GET/POST.
-	 *
-	 * @param string $method
-	 */
-	public function set_method( $method ) {
+	/** Set Form method attribute ie. GET/POST. */
+	public function set_method( string $method ): self {
 		$this->attributes['method'] = $method;
 
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_method() {
-		return isset( $this->attributes['method'] ) ? $this->attributes['method'] : 'POST';
+	public function get_method(): string {
+		return $this->attributes['method'] ?? 'POST';
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_action() {
-		return isset( $this->attributes['action'] ) ? $this->attributes['action'] : '';
+	public function get_action(): string {
+		return $this->attributes['action'] ?? '';
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function is_submitted() {
+	public function is_submitted(): bool {
 		return null !== $this->updated_data;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
+	/** @return void */
 	public function add_field( Field $field ) {
 		$this->fields[] = $field;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function is_active() {
+	public function is_active(): bool {
 		return true;
 	}
 
@@ -107,17 +74,16 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 * Add more fields to form.
 	 *
 	 * @param Field[] $fields Field to add to form.
+	 *
+	 * @return void
 	 */
 	public function add_fields( array $fields ) {
 		array_map( [ $this, 'add_field' ], $fields );
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function is_valid() {
+	public function is_valid(): bool {
 		foreach ( $this->fields as $field ) {
-			$field_value     = isset( $this->updated_data[ $field->get_name() ] ) ? $this->updated_data[ $field->get_name() ] : $field->get_default_value();
+			$field_value     = $this->updated_data[ $field->get_name() ] ?? $field->get_default_value();
 			$field_validator = $field->get_validator();
 			if ( ! $field_validator->is_valid( $field_value ) ) {
 				return false;
@@ -132,7 +98,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 *
 	 * @param array|ContainerInterface $request new data to update.
 	 */
-	public function handle_request( $request = array() ) {
+	public function handle_request( array $request = [] ) {
 		if ( $this->updated_data === null ) {
 			$this->updated_data = [];
 		}
@@ -165,48 +131,41 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		}
 	}
 
-	/**
-	 * Renders only fields without form.
-	 *
-	 * @param Renderer $renderer
-	 *
-	 * @return string
-	 */
-	public function render_fields( Renderer $renderer ) {
+	/** Renders only fields without form. */
+	public function render_fields( Renderer $renderer ): string {
 		$content     = '';
 		$fields_data = $this->get_data();
 		foreach ( $this->get_fields() as $field ) {
-			$content .= $renderer->render( $field->should_override_form_template() ? $field->get_template_name() : 'form-field',
+			$content .= $renderer->render(
+				$field->should_override_form_template() ? $field->get_template_name() : 'form-field',
 				[
 					'field'         => $field,
 					'renderer'      => $renderer,
 					'name_prefix'   => $this->get_form_id(),
-					'value'         => isset( $fields_data[ $field->get_name() ] ) ? $fields_data[ $field->get_name() ] : $field->get_default_value(),
+					'value'         => $fields_data[ $field->get_name() ] ?? $field->get_default_value(),
 					'template_name' => $field->get_template_name(),
-				] );
+				]
+			);
 		}
 
 		return $content;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function render_form( Renderer $renderer ) {
-		$content = $renderer->render( 'form-start', [
-			'form'   => $this,
-			'method' => $this->get_method(), // backward compat
-			'action' => $this->get_action(),  // backward compat
-		] );
+	public function render_form( Renderer $renderer ): string {
+		$content  = $renderer->render(
+			'form-start',
+			[
+				'form'   => $this,
+				'method' => $this->get_method(), // backward compat.
+				'action' => $this->get_action(),  // backward compat.
+			]
+		);
 		$content .= $this->render_fields( $renderer );
 		$content .= $renderer->render( 'form-end' );
 
 		return $content;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function put_data( PersistentContainer $container ) {
 		foreach ( $this->get_fields() as $field ) {
 			$data_key = $field->get_name();
@@ -223,10 +182,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function get_data() {
+	public function get_data(): array {
 		$data = $this->updated_data;
 
 		foreach ( $this->get_fields() as $field ) {
@@ -239,10 +195,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $data;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function get_fields() {
+	public function get_fields(): array {
 		$fields = $this->fields;
 
 		usort(
@@ -255,17 +208,11 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $fields;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function get_form_id() {
+	public function get_form_id(): int {
 		return $this->form_id;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function get_normalized_data() {
+	public function get_normalized_data(): array {
 		return $this->get_data();
 	}
 }

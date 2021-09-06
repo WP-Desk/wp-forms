@@ -8,7 +8,7 @@ namespace WPDesk\Forms\Field;
  * @package WPDesk\Forms
  */
 abstract class NoValueField extends BasicField {
-	public function get_name() {
+	public function get_name(): string {
 		return '';
 	}
 }

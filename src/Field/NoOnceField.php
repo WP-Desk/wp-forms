@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms\Field;
 
+use WPDesk\Forms\Validator;
 use WPDesk\Forms\Validator\NonceValidator;
 
 class NoOnceField extends BasicField {
@@ -11,11 +12,11 @@ class NoOnceField extends BasicField {
 		$this->meta['action'] = $action_name;
 	}
 
-	public function get_validator() {
+	public function get_validator(): Validator {
 		return new NonceValidator( $this->get_meta_value( 'action' ) );
 	}
 
-	public function get_template_name() {
+	public function get_template_name(): string {
 		return 'noonce';
 	}
 }
