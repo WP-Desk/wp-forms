@@ -54,13 +54,7 @@ interface Field {
 	 */
 	public function get_attributes( array $except = [] ): array;
 
-	/**
-	 * @param string  $name
-	 * @param ?string $default
-	 *
-	 * @return string
-	 */
-	public function get_attribute( string $name, $default = null ): string;
+	public function get_attribute( string $name, string $default = null ): string;
 
 	public function is_attribute_set( string $name ): bool;
 

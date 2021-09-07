@@ -1,8 +1,8 @@
-[![pipeline status](https://gitlab.com/wpdesk/wp-forms/badges/master/pipeline.svg)](https://gitlab.com/wpdesk/wp-forms/pipelines) 
-[![coverage report](https://gitlab.com/wpdesk/wp-forms/badges/master/coverage.svg)](https://gitlab.com/wpdesk/wp-forms/commits/master) 
-[![Latest Stable Version](https://poser.pugx.org/wpdesk/wp-forms/v/stable)](https://packagist.org/packages/wpdesk/wp-forms) 
-[![Total Downloads](https://poser.pugx.org/wpdesk/wp-forms/downloads)](https://packagist.org/packages/wpdesk/wp-forms) 
-[![Latest Unstable Version](https://poser.pugx.org/wpdesk/wp-forms/v/unstable)](https://packagist.org/packages/wpdesk/wp-forms) 
+[![pipeline status](https://gitlab.com/wpdesk/wp-forms/badges/master/pipeline.svg)](https://gitlab.com/wpdesk/wp-forms/pipelines)
+[![coverage report](https://gitlab.com/wpdesk/wp-forms/badges/master/coverage.svg)](https://gitlab.com/wpdesk/wp-forms/commits/master)
+[![Latest Stable Version](https://poser.pugx.org/wpdesk/wp-forms/v/stable)](https://packagist.org/packages/wpdesk/wp-forms)
+[![Total Downloads](https://poser.pugx.org/wpdesk/wp-forms/downloads)](https://packagist.org/packages/wpdesk/wp-forms)
+[![Latest Unstable Version](https://poser.pugx.org/wpdesk/wp-forms/v/unstable)](https://packagist.org/packages/wpdesk/wp-forms)
 [![License](https://poser.pugx.org/wpdesk/wp-forms/license)](https://packagist.org/packages/wpdesk/wp-forms)
 
 WordPress Library for Form integration
@@ -11,7 +11,7 @@ WordPress Library for Form integration
 
 ## Requirements
 
-PHP 5.6 or later.
+PHP 7.0 or later.
 
 ## Composer
 
@@ -34,26 +34,18 @@ Let's say we have an abstraction for settings tabs:
 interface SettingsTab {
 	/**
 	 * Slug name used for unique url and settings in db.
-	 *
-	 * @return string
 	 */
-	public static function get_tab_slug();
+	public static function get_tab_slug(): string;
 
 	/**
 	 * Tab name to show on settings page.
-	 *
-	 * @return string
 	 */
-	public function get_tab_name();
+	public function get_tab_name(): string;
 
 	/**
 	 * Render tab content and return it as string.
-	 *
-	 * @param Renderer $renderer
-	 *
-	 * @return string
 	 */
-	public function render( Renderer $renderer );
+	public function render( Renderer $renderer ): string;
 
 	/**
 	 * Use to set settings from database or defaults.
@@ -74,14 +66,14 @@ interface SettingsTab {
 	 *
 	 * @return void
 	 */
-	public function handle_request( $request );
+	public function handle_request( array $request );
 
 	/**
 	 * Returns valid data from Tab. Can be used after ::handle_request or ::set_data.
 	 *
 	 * @return array
 	 */
-	public function get_data();
+	public function get_data(): array;
 }
 ```
 
@@ -95,12 +87,9 @@ abstract class FieldSettingsTab implements SettingsTab {
 	/**
 	 * @return Field[]
 	 */
-	abstract protected function get_fields();
+	abstract protected function get_fields(): array;
 
-	/**
-	 * @return FormWithFields
-	 */
-	protected function get_form() {
+	protected function get_form(): FormWithFields {
 		if ( $this->form === null ) {
 			$fields     = $this->get_fields();
 			$this->form = new FormWithFields( $fields, static::get_tab_slug() );
@@ -109,7 +98,7 @@ abstract class FieldSettingsTab implements SettingsTab {
 		return $this->form;
 	}
 
-	public function render( Renderer $renderer) {
+	public function render( Renderer $renderer ) {
 		return $this->get_form()->render_form( $renderer );
 	}
 
@@ -121,7 +110,7 @@ abstract class FieldSettingsTab implements SettingsTab {
 		$this->get_form()->handle_request( $request );
 	}
 
-	public function get_data() {
+	public function get_data(): array {
 		return $this->get_form()->get_data();
 	}
 }
@@ -131,10 +120,7 @@ Then we can create a settings tab that looks like that:
 
 ```php
 final class GeneralSettings extends FieldSettingsTab {
-	/**
-	 * @inheritDoc
-	 */
-	protected function get_fields() {
+	protected function get_fields(): array {
 		return [
 			( new CheckboxField() )
 				->set_label( __( 'Subscribe on checkout', 'some-text-domain' ) )
@@ -166,23 +152,17 @@ final class GeneralSettings extends FieldSettingsTab {
 		];
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public static function get_tab_slug() {
 		return 'general';
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function get_tab_name() {
 		return __( 'General', 'text-domain' );
 	}
 }
 ```
 
-Then class like that provides form load/save/render support for these abstraction can look like this:
+Then class like that provides form load/save/render support for this abstraction can look like this:
 
 ```php
 /**
@@ -212,8 +192,6 @@ final class Settings {
 	}
 
 	/**
-	 * Render
-	 *
 	 * @return void
 	 */
 	public function render_page_action() {
@@ -228,10 +206,7 @@ final class Settings {
 		echo $renderer->render( 'footer' );
 	}
 
-	/**
-	 * @return SettingsTab
-	 */
-	private function get_active_tab() {
+	private function get_active_tab(): SettingTab {
 		$selected_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 		$tabs         = $this->get_settings_tabs();
 		if ( ! empty( $selected_tab ) && isset( $tabs[ $selected_tab ] ) ) {
@@ -244,7 +219,7 @@ final class Settings {
 	/**
 	 * @return SettingsTab[]
 	 */
-	private function get_settings_tabs() {
+	private function get_settings_tabs(): array {
 		static $tabs = [];
 		if ( empty( $tabs ) ) {
 			$tabs = [
@@ -263,15 +238,12 @@ final class Settings {
 	 *
 	 * @return PersistentContainer
 	 */
-	public static function get_settings_persistence( $tab_slug ) {
+	public static function get_settings_persistence( string $tab_slug ): PersistentContainer {
 		return new WordpressOptionsContainer( 'some-settings-' . $tab_slug );
 	}
 
 	/**
 	 * Save data from tab to persistent container.
-	 *
-	 * @param SettingsTab $tab
-	 * @param PersistentContainer $container
 	 */
 	private function save_tab_data( SettingsTab $tab, PersistentContainer $container ) {
 		$tab_data = $tab->get_data();
@@ -282,17 +254,14 @@ final class Settings {
 		} );
 	}
 
-	/**
-	 * @return \WPDesk\View\Renderer\Renderer
-	 */
-	private function get_renderer() {
+	private function get_renderer(): \WPDesk\View\Renderer\Renderer {
 		return new SimplePhpRenderer( new DefaultFormFieldResolver() );
 	}
 
 	/**
 	 * @return string[]
 	 */
-	private function get_tabs_menu_items() {
+	private function get_tabs_menu_items(): array {
 		$menu_items = [];
 
 		foreach ( $this->get_settings_tabs() as $tab ) {
@@ -303,8 +272,3 @@ final class Settings {
 	}
 }
 ```
-
-
-## Project documentation
-
-PHPDoc: https://wpdesk.gitlab.io/wp-forms/index.html  

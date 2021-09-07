@@ -29,7 +29,7 @@ class JsonNormalizedRenderer implements FieldRenderer {
 				'readonly' => $field->is_readonly(),
 				'required' => $field->is_required(),
 				'prefix'   => $name_prefix,
-				'value '   => isset( $fields_data[ $field->get_name() ] ) ? $fields_data[ $field->get_name() ] : $field->get_default_value(),
+				'value '   => $fields_data[ $field->get_name() ] ?? $field->get_default_value(),
 			];
 
 			if ( $field->has_classes() ) {
