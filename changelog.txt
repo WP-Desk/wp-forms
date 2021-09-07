@@ -1,8 +1,11 @@
 # Changelog
 
-## [2.5.0] - 2021-09-03
+## [3.0.0] - 2021-09-08
 ### Added
+- Added strong typing to all of the interfaces
 - Added fields sorting by priority field
+###
+- Removed deprecated classes
 
 ## [2.4.6] - 2021-08-23
 ### Fixed
