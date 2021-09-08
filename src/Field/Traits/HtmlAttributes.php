@@ -2,6 +2,8 @@
 
 namespace WPDesk\Forms\Field\Traits;
 
+use WPDesk\Forms\Field;
+
 /**
  * Implementation of HTML attributes like id, name, action etc.
  *
@@ -29,13 +31,19 @@ trait HtmlAttributes {
 		);
 	}
 
-	public function set_attribute( string $name, string $value ): self {
+	/**
+	 * @return \WPDesk\Forms\Field|\WPDesk\Forms\Form
+	 */
+	public function set_attribute( string $name, string $value ) {
 		$this->attributes[ $name ] = $value;
 
 		return $this;
 	}
 
-	public function unset_attribute( string $name ): self {
+	/**
+	 * @return \WPDesk\Forms\Field|\WPDesk\Forms\Form
+	 */
+	public function unset_attribute( string $name ) {
 		unset( $this->attributes[ $name ] );
 
 		return $this;

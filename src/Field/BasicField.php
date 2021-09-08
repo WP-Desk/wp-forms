@@ -3,7 +3,6 @@
 namespace WPDesk\Forms\Field;
 
 use WPDesk\Forms\Field;
-use WPDesk\Forms\Form\FormWithFields;
 use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\NoSanitize;
 use WPDesk\Forms\Serializer;
@@ -38,7 +37,7 @@ abstract class BasicField implements Field {
 		return $this->meta['label'];
 	}
 
-	public function set_label( string $value ): self {
+	public function set_label( string $value ): Field {
 		$this->meta['label'] = $value;
 
 		return $this;
@@ -68,13 +67,13 @@ abstract class BasicField implements Field {
 		return isset( $this->meta['description'] );
 	}
 
-	public function set_description( string $value ): self {
+	public function set_description( string $value ): Field {
 		$this->meta['description'] = $value;
 
 		return $this;
 	}
 
-	public function set_description_tip( string $value ): self {
+	public function set_description_tip( string $value ): Field {
 		$this->meta['description_tip'] = $value;
 
 		return $this;
@@ -84,7 +83,7 @@ abstract class BasicField implements Field {
 		return $this->attributes['type'];
 	}
 
-	public function set_placeholder( string $value ): self {
+	public function set_placeholder( string $value ): Field {
 		$this->meta['placeholder'] = $value;
 
 		return $this;
@@ -98,7 +97,7 @@ abstract class BasicField implements Field {
 		return $this->meta['placeholder'];
 	}
 
-	public function set_name( string $name ): self {
+	public function set_name( string $name ): Field {
 		$this->attributes['name'] = $name;
 
 		return $this;
@@ -140,7 +139,7 @@ abstract class BasicField implements Field {
 		return $this->attributes['multiple'] ?? false;
 	}
 
-	public function set_disabled(): self {
+	public function set_disabled(): Field {
 		$this->attributes['disabled'] = true;
 
 		return $this;
@@ -150,7 +149,7 @@ abstract class BasicField implements Field {
 		return $this->attributes['disabled'] ?? false;
 	}
 
-	public function set_readonly(): self {
+	public function set_readonly(): Field {
 		$this->attributes['readonly'] = true;
 
 		return $this;
@@ -160,25 +159,25 @@ abstract class BasicField implements Field {
 		return $this->attributes['readonly'] ?? false;
 	}
 
-	public function set_required(): self {
+	public function set_required(): Field {
 		$this->meta['required'] = true;
 
 		return $this;
 	}
 
-	public function add_class( string $class_name ): self {
+	public function add_class( string $class_name ): Field {
 		$this->meta['class'][ $class_name ] = $class_name;
 
 		return $this;
 	}
 
-	public function unset_class( string $class_name ): self {
+	public function unset_class( string $class_name ): Field {
 		unset( $this->meta['class'][ $class_name ] );
 
 		return $this;
 	}
 
-	public function add_data( string $data_name, string $data_value ): self {
+	public function add_data( string $data_name, string $data_value ): Field {
 		if ( ! isset( $this->meta['data'] ) ) {
 			$this->meta['data'] = [];
 		}
@@ -187,7 +186,7 @@ abstract class BasicField implements Field {
 		return $this;
 	}
 
-	public function unset_data( string $data_name ): self {
+	public function unset_data( string $data_name ): Field {
 		unset( $this->meta['data'][ $data_name ] );
 
 		return $this;
@@ -205,7 +204,7 @@ abstract class BasicField implements Field {
 		return $this->default_value;
 	}
 
-	public function set_default_value( string $value ): self {
+	public function set_default_value( string $value ): Field {
 		$this->default_value = $value;
 
 		return $this;
@@ -236,7 +235,7 @@ abstract class BasicField implements Field {
 		return new NoSerialize();
 	}
 
-	public function set_serializer( Serializer $serializer ): self {
+	public function set_serializer( Serializer $serializer ): Field {
 		$this->meta['serializer'] = $serializer;
 
 		return $this;
@@ -251,7 +250,7 @@ abstract class BasicField implements Field {
 	 *
 	 * @see FormWithFields::get_fields()
 	 */
-	public function set_priority( int $priority ): self {
+	public function set_priority( int $priority ): Field {
 		$this->meta['priority'] = $priority;
 
 		return $this;

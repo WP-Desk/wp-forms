@@ -73,9 +73,9 @@ interface Field {
 	/** @return array<string,int> */
 	public function get_data(): array;
 
-	public function add_data( string $data_name, string $data_value ): self;
+	public function add_data( string $data_name, string $data_value ): Field;
 
-	public function unset_data( string $data_name ): self;
+	public function unset_data( string $data_name ): Field;
 
 	/** @return mixed */
 	public function get_possible_values();

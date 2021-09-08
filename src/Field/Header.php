@@ -2,6 +2,8 @@
 
 namespace WPDesk\Forms\Field;
 
+use WPDesk\Forms\Field;
+
 class Header extends NoValueField {
 	public function __construct() {
 		parent::__construct();
@@ -16,7 +18,7 @@ class Header extends NoValueField {
 		return true;
 	}
 
-	public function set_header_size( int $value ): self {
+	public function set_header_size( int $value ): Field {
 		$this->meta['header_size'] = $value;
 
 		return $this;
