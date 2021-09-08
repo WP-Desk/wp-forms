@@ -113,7 +113,9 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	/**
 	 * Data could be saved in some place. Use this method to transmit them to form.
 	 *
-	 * @param array|ContainerInterface $data Data consistent with Form and ContainerForm interface.
+	 * @param array|ContainerInterface $data Data consistent with Form or ContainerForm interface.
+	 *
+	 * @return void
 	 */
 	public function set_data( $data ) {
 		if ( is_array( $data ) ) {
@@ -208,7 +210,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $fields;
 	}
 
-	public function get_form_id(): int {
+	public function get_form_id(): string {
 		return $this->form_id;
 	}
 

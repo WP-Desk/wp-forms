@@ -2,8 +2,6 @@
 
 namespace WPDesk\Forms\Field\Traits;
 
-use WPDesk\Forms\Field;
-
 /**
  * Implementation of HTML attributes like id, name, action etc.
  *
@@ -54,6 +52,6 @@ trait HtmlAttributes {
 	}
 
 	public function get_attribute( string $name, string $default = null ): string {
-		return $this->attributes[ $name ] ?? $default;
+		return $this->attributes[ $name ] ?? $default ?? '';
 	}
 }
