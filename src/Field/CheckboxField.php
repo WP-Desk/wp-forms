@@ -2,6 +2,8 @@
 
 namespace WPDesk\Forms\Field;
 
+use WPDesk\Forms\Field;
+
 class CheckboxField extends BasicField {
 	const VALUE_TRUE  = 'yes';
 	const VALUE_FALSE = 'no';
@@ -19,7 +21,7 @@ class CheckboxField extends BasicField {
 		return $this->meta['sublabel'];
 	}
 
-	public function set_sublabel( string $value ): self {
+	public function set_sublabel( string $value ): Field {
 		$this->meta['sublabel'] = $value;
 
 		return $this;
