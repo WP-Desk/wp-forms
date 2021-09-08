@@ -200,11 +200,13 @@ abstract class BasicField implements Field {
 		return isset( $this->meta['class'][ $name ] );
 	}
 
-	public function get_default_value(): string {
+	/** @return mixed */
+	public function get_default_value() {
 		return $this->default_value;
 	}
 
-	public function set_default_value( string $value ): Field {
+	/** @param mixed $value */
+	public function set_default_value( $value ): Field {
 		$this->default_value = $value;
 
 		return $this;

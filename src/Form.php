@@ -42,7 +42,7 @@ interface Form {
 	 *
 	 * @return void
 	 */
-	public function set_data( array $data );
+	public function set_data( $data );
 
 	/**
 	 * Use to render the form to string.
@@ -69,6 +69,6 @@ interface Form {
 	/**
 	 * Form if you ever need to have more than one form at once.
 	 */
-	public function get_form_id(): int;
+	public function get_form_id(): string;
 }
 
