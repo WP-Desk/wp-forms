@@ -4,23 +4,24 @@
  * @var string $name_prefix
  * @var string $value
  */
-?>
-<?php wp_print_styles( 'media-views' ); ?>
+
+wp_print_styles( 'media-views' ); ?>
+
 <script>
 	window.SM_EditorInitialized = true;
 </script>
 
 
 <?php
-$id              = uniqid( 'wyswig_' );
+$editor_id       = uniqid( 'wyswig_' );
 $editor_settings = [
-	'textarea_name' => esc_attr( $name_prefix ) . '[' . esc_attr( $field->get_name() ) . ']',
+	'textarea_name' => \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']',
 ];
 
-wp_editor( wp_kses_post( $value ), $id, $editor_settings );
+wp_editor( wp_kses_post( $value ), $editor_id, $editor_settings );
 ?>
 <script type="text/javascript">
 	(function () {
-		ShopMagic.wyswig.init('<?php echo esc_attr( $id ); ?>');
+		ShopMagic.wyswig.init('<?php echo \esc_attr( $editor_id ); ?>');
 	}());
 </script>

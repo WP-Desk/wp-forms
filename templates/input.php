@@ -1,14 +1,12 @@
 <?php
-
 /**
  * @var \WPDesk\Forms\Field $field
  * @var string $name_prefix
  * @var string $value
  */
-?>
 
-<?php if ( ! \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ] ) ) : ?>
-	<input type="hidden" name="<?php echo $name_prefix . '[' . $field->get_name() . ']'; ?>" value="no"/>
+if ( ! \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ], true ) ) : ?>
+	<input type="hidden" name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>" value="no"/>
 <?php endif; ?>
 
 <?php
@@ -31,7 +29,7 @@ if ( $field->get_type() === 'checkbox' && $field->has_sublabel() ) :
 
 	<?php
 	foreach ( $field->get_attributes() as $key => $atr_val ) :
-		echo $key . '="' . \esc_attr( $atr_val ) . '"';
+		echo \esc_attr( $key ) . '="' . \esc_attr( $atr_val ) . '"';
 		?>
 	<?php endforeach; ?>
 
@@ -47,7 +45,7 @@ if ( $field->get_type() === 'checkbox' && $field->has_sublabel() ) :
 	if ( $field->is_readonly() ) :
 		?>
 		readonly="readonly"<?php endif; ?>
-	<?php if ( \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ] ) ) : ?>
+	<?php if ( \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ], true ) ) : ?>
 		value="<?php echo \esc_html( $value ); ?>"
 	<?php else : ?>
 		value="yes"
