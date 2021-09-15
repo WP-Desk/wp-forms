@@ -4,11 +4,9 @@
  * @var \WPDesk\View\Renderer\Renderer $renderer
  * @var string $name_prefix
  * @var string $value
- *
  * @var string $template_name Real field template.
  */
-?>
-<?php
+
 if ( empty( $value ) || is_string( $value ) ) {
 	$input_values[] = '';
 } else {
@@ -17,8 +15,8 @@ if ( empty( $value ) || is_string( $value ) ) {
 ?>
 <div class="clone-element-container">
 <?php foreach ( $input_values as $text_value ) : ?>
-	<?php if ( ! \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ] ) ) : ?>
-	<input type="hidden" name="<?php echo $name_prefix . '[' . $field->get_name() . ']'; ?>" value="no"/>
+	<?php if ( ! \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ], true ) ) : ?>
+	<input type="hidden" name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>" value="no"/>
 <?php endif; ?>
 
 	<?php
@@ -41,7 +39,7 @@ if ( empty( $value ) || is_string( $value ) ) {
 
 		<?php
 		foreach ( $field->get_attributes() as $key => $atr_val ) :
-			echo $key . '="' . \esc_attr( $atr_val ) . '"';
+			echo \esc_attr( $key ) . '="' . \esc_attr( $atr_val ) . '"';
 			?>
 		<?php endforeach; ?>
 
@@ -57,7 +55,7 @@ if ( empty( $value ) || is_string( $value ) ) {
 		if ( $field->is_readonly() ) :
 			?>
 			readonly="readonly"<?php endif; ?>
-		<?php if ( \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ] ) ) : ?>
+		<?php if ( \in_array( $field->get_type(), [ 'number', 'text', 'hidden' ], true ) ) : ?>
 			value="<?php echo \esc_html( $text_value ); ?>"
 		<?php else : ?>
 			value="yes"

@@ -31,7 +31,7 @@
 	-->
 
 	<!-- Define plugin text domain for i18n. -->
-	<config name="text_domain" value="shopmagic-for-woocommerce"/>
+	<config name="text_domain" value="wp-forms"/>
 
 	<!-- This value should be aligned with WordPress support version declared in plugin header -->
 	<config name="minimum_supported_wp_version" value="5.0"/>

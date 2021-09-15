@@ -4,7 +4,6 @@
  * @var \WPDesk\View\Renderer\Renderer $renderer
  * @var string $name_prefix
  * @var string $value
- *
  * @var string $template_name Real field template.
  */
 
@@ -16,7 +15,7 @@
 <?php endif; ?>
 
 <?php foreach ( $field->get_attributes( [] ) as $key => $val ) : ?>
-	<?php echo $key . '="' . \esc_attr( $val ) . '"'; ?>
+	<?php echo \esc_attr( $key ) . '="' . \esc_attr( $val ) . '"'; ?>
 <?php endforeach; ?>
 
 	type="<?php echo \esc_attr( $field->get_type() ); ?>"
