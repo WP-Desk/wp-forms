@@ -58,11 +58,14 @@ interface Field {
 
 	public function is_attribute_set( string $name ): bool;
 
-	public function get_meta_value( string $name ): string;
+	/** @return mixed */
+	public function get_meta_value( string $name );
 
 	public function is_meta_value_set( string $name ): bool;
 
 	public function get_classes(): string;
+
+	public function get_type(): string;
 
 	public function has_classes(): bool;
 
@@ -70,7 +73,7 @@ interface Field {
 
 	public function has_data(): bool;
 
-	/** @return array<string,int> */
+	/** @return array<string|int> */
 	public function get_data(): array;
 
 	public function add_data( string $data_name, string $data_value ): Field;

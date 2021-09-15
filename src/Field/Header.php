@@ -6,7 +6,6 @@ use WPDesk\Forms\Field;
 
 class Header extends NoValueField {
 	public function __construct() {
-		parent::__construct();
 		$this->meta['header_size'] = '';
 	}
 
