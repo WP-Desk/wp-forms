@@ -4,7 +4,6 @@ namespace WPDesk\Forms\Field;
 
 class ProductSelect extends SelectField {
 	public function __construct() {
-		parent::__construct();
 		$this->set_multiple();
 	}
 

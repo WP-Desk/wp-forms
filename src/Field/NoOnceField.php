@@ -7,8 +7,7 @@ use WPDesk\Forms\Validator\NonceValidator;
 
 class NoOnceField extends BasicField {
 
-	public function __construct( $action_name ) {
-		parent::__construct();
+	public function __construct( string $action_name ) {
 		$this->meta['action'] = $action_name;
 	}
 

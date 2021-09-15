@@ -9,30 +9,44 @@ namespace WPDesk\Forms\Field\Traits;
  */
 trait HtmlAttributes {
 
-	/** @var string[] */
-	protected $attributes;
+	/** @var array{placeholder: string, name: string, id: string, class: string[], readonly: bool, multiple: bool, disabled: bool, required: bool, method: string, action: string} */
+	protected $attributes = [
+		'placeholder' => '',
+		'name'        => '',
+		'id'          => '',
+		'class'       => [],
+		'action'      => '',
+		'method'      => 'POST',
+		'readonly'    => false,
+		'multiple'    => false,
+		'disabled'    => false,
+		'required'    => false,
+	];
 
 	/**
 	 * Get list of all attributes except given.
 	 *
 	 * @param string[] $except
 	 *
-	 * @return string[]
+	 * @return array<string[]|string|bool>
 	 */
-	public function get_attributes( array $except = [ 'name', 'type' ] ): array {
+	final public function get_attributes( array $except = [ 'name' ] ): array {
 		return array_filter(
 			$this->attributes,
-			static function ( $value, $key ) use ( $except ) {
+			static function ( $key ) use ( $except ) {
 				return ! in_array( $key, $except, true );
 			},
-			ARRAY_FILTER_USE_BOTH
+			ARRAY_FILTER_USE_KEY
 		);
 	}
 
 	/**
+	 * @param string $name
+	 * @param string[]|string|bool $value
+	 *
 	 * @return \WPDesk\Forms\Field|\WPDesk\Forms\Form
 	 */
-	public function set_attribute( string $name, string $value ) {
+	final public function set_attribute( string $name, $value ) {
 		$this->attributes[ $name ] = $value;
 
 		return $this;
@@ -41,17 +55,21 @@ trait HtmlAttributes {
 	/**
 	 * @return \WPDesk\Forms\Field|\WPDesk\Forms\Form
 	 */
-	public function unset_attribute( string $name ) {
+	final public function unset_attribute( string $name ) {
 		unset( $this->attributes[ $name ] );
 
 		return $this;
 	}
 
-	public function is_attribute_set( string $name ): bool {
-		return isset( $this->attributes[ $name ] );
+	final public function is_attribute_set( string $name ): bool {
+		return ! empty( $this->attributes[ $name ] );
 	}
 
-	public function get_attribute( string $name, string $default = null ): string {
-		return $this->attributes[ $name ] ?? $default ?? '';
+	final public function get_attribute( string $name, string $default = null ): string {
+		if ( is_array( $this->attributes[ $name ] ) ) {
+			// Be aware of coercing - if implode returns string(0) '', then return $default value.
+			return implode( ' ', $this->attributes[ $name ] ) ?: $default ?? '';
+		}
+		return (string) $this->attributes[ $name ] ?? $default ?? '';
 	}
 }

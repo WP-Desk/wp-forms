@@ -5,15 +5,11 @@ namespace WPDesk\Forms;
 interface Serializer {
 	/**
 	 * @param mixed $value
-	 *
-	 * @return mixed
 	 */
-	public function serialize( $value );
+	public function serialize( $value ): string;
 
 	/**
-	 * @param mixed $value
-	 *
 	 * @return mixed
 	 */
-	public function unserialize( $value );
+	public function unserialize( string $value );
 }

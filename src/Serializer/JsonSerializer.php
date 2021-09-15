@@ -9,7 +9,7 @@ class JsonSerializer implements Serializer {
 		return (string) json_encode( $value );
 	}
 
-	public function unserialize( $value ) {
+	public function unserialize( string $value ) {
 		return json_decode( $value, true );
 	}
 }

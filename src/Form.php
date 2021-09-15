@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms;
 
+use WPDesk\Persistence\PersistentContainer;
 use WPDesk\View\Renderer\Renderer;
 
 /**
@@ -36,15 +37,6 @@ interface Form {
 	public function handle_request( array $request = [] );
 
 	/**
-	 * Data could be saved in some place. Use this method to transmit them to form.
-	 *
-	 * @param array $data Data for form.
-	 *
-	 * @return void
-	 */
-	public function set_data( $data );
-
-	/**
 	 * Use to render the form to string.
 	 *
 	 * @param Renderer $renderer Renderer to render form fields and form-templates.
@@ -54,7 +46,7 @@ interface Form {
 	/**
 	 * Get data from form. Use after handle_request or set_data.
 	 *
-	 * @return array<int,string>
+	 * @return array<int|string>
 	 */
 	public function get_data(): array;
 

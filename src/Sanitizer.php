@@ -3,6 +3,10 @@
 namespace WPDesk\Forms;
 
 interface Sanitizer {
-	/** @param mixed $value */
-	public function sanitize( $value ): string;
+	/**
+	 * @param mixed $value
+	 *
+	 * @return mixed
+	 */
+	public function sanitize( $value );
 }

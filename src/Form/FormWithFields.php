@@ -7,7 +7,6 @@ use WPDesk\Forms\ContainerForm;
 use WPDesk\Forms\Field;
 use WPDesk\Forms\FieldProvider;
 use WPDesk\Forms\Form;
-use WPDesk\Persistence\Adapter\ArrayContainer;
 use WPDesk\Persistence\ElementNotExistsException;
 use WPDesk\Persistence\PersistentContainer;
 use WPDesk\View\Renderer\Renderer;
@@ -50,11 +49,11 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	public function get_method(): string {
-		return $this->attributes['method'] ?? 'POST';
+		return $this->attributes['method'];
 	}
 
 	public function get_action(): string {
-		return $this->attributes['action'] ?? '';
+		return $this->attributes['action'];
 	}
 
 	public function is_submitted(): bool {
@@ -113,14 +112,9 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	/**
 	 * Data could be saved in some place. Use this method to transmit them to form.
 	 *
-	 * @param array|ContainerInterface $data Data consistent with Form or ContainerForm interface.
-	 *
 	 * @return void
 	 */
-	public function set_data( $data ) {
-		if ( is_array( $data ) ) {
-			$data = new ArrayContainer( $data );
-		}
+	public function set_data( ContainerInterface $data ) {
 		foreach ( $this->fields as $field ) {
 			$data_key = $field->get_name();
 			if ( $data->has( $data_key ) ) {

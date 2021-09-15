@@ -8,9 +8,8 @@ class CheckboxField extends BasicField {
 	const VALUE_TRUE  = 'yes';
 	const VALUE_FALSE = 'no';
 
-	public function __construct() {
-		parent::__construct();
-		$this->set_attribute( 'type', 'checkbox' );
+	public function get_type(): string {
+		return 'checkbox';
 	}
 
 	public function get_template_name(): string {
