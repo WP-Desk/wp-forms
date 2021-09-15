@@ -5,8 +5,8 @@
  * @var string $value
  */
 
-$header_size = $field->get_meta_value( 'header_size' ) ?: '2';
-$classes     = $field->has_classes() ? 'class="' . $field->get_classes() . '"' : '';
+$header_size = (int) $field->get_meta_value( 'header_size' ) ?: 2;
+$classes     = $field->has_classes() ? 'class="' . esc_attr( $field->get_classes() ) . '"' : '';
 
 ?>
 

@@ -7,7 +7,7 @@
 
 $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 ?>
-<div class="media-input-wrapper" id="<?php echo $media_container_id; ?>">
+<div class="media-input-wrapper" id="<?php echo esc_attr( $media_container_id ); ?>">
 	<input type="hidden" class="image-field-value" value="<?php echo \esc_html( $value ); ?>"
 		   name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
 		   id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
@@ -17,14 +17,14 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 		<?php endif; ?>
 	</div>
 	<p class="hide-if-no-js">
-		<a class="upload-custom-img 
+		<a class="upload-custom-img
 		<?php
 		if ( $value ) :
 			?>
 			hidden<?php endif ?>" href="<?php echo $value; ?>">
 			<?php _e( 'Set image', 'wp-forms' ); ?>
 		</a>
-		<a class="delete-custom-img 
+		<a class="delete-custom-img
 		<?php
 		if ( ! $value ) :
 			?>
@@ -36,7 +36,7 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 <script>
 	jQuery( function ( $ ) {
 		var frame,
-			metaBox = $( '#<?php echo $media_container_id; ?>' ),
+			metaBox = $( '#<?php echo esc_attr( $media_container_id ); ?>' ),
 			addImgLink = metaBox.find( '.upload-custom-img' ),
 			delImgLink = metaBox.find( '.delete-custom-img' ),
 			imgContainer = metaBox.find( '.custom-img-container' ),
