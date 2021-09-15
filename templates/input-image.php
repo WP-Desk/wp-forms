@@ -7,7 +7,7 @@
 
 $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 ?>
-<div class="media-input-wrapper" id="<?php echo $media_container_id; ?>">
+<div class="media-input-wrapper" id="<?php echo esc_attr( $media_container_id ); ?>">
 	<input type="hidden" class="image-field-value" value="<?php echo \esc_html( $value ); ?>"
 		   name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
 		   id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
