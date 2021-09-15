@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms;
 
+use Psr\Container\ContainerInterface;
 use WPDesk\Persistence\PersistentContainer;
 
 /**
@@ -11,7 +12,7 @@ use WPDesk\Persistence\PersistentContainer;
  */
 interface ContainerForm {
 	/**
-	 * @param \Psr\Container\ContainerInterface $data
+	 * @param ContainerInterface $data
 	 *
 	 * @return void
 	 */
