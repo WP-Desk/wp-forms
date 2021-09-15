@@ -124,7 +124,7 @@ abstract class BasicField implements Field {
 	}
 
 	public function get_possible_values() {
-		return isset( $this->meta['possible_values'] ) ? $this->meta['possible_values'] : [];
+		return $this->meta['possible_values'] ?? [];
 	}
 
 	public function get_id(): string {
