@@ -6,7 +6,6 @@ use WPDesk\Forms\Field;
 use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\NoSanitize;
 use WPDesk\Forms\Serializer;
-use WPDesk\Forms\Serializer\NoSerialize;
 use WPDesk\Forms\Validator;
 use WPDesk\Forms\Validator\ChainValidator;
 use WPDesk\Forms\Validator\RequiredValidator;
@@ -33,6 +32,35 @@ abstract class BasicField implements Field {
 		'serializer'        => null,
 	];
 
+	public function should_override_form_template(): bool {
+		return false;
+	}
+
+	public function get_type(): string {
+		return 'text';
+	}
+
+	public function get_validator(): Validator {
+		$chain = new ChainValidator();
+		if ( $this->is_required() ) {
+			$chain->attach( new RequiredValidator() );
+		}
+
+		return $chain;
+	}
+
+	public function get_sanitizer(): Sanitizer {
+		return new NoSanitize();
+	}
+
+	public function get_serializer(): Serializer {
+		return null;
+	}
+
+	final public function get_name(): string {
+		return $this->attributes['name'];
+	}
+
 	final public function get_label(): string {
 		return $this->meta['label'];
 	}
@@ -49,11 +77,6 @@ abstract class BasicField implements Field {
 
 	final public function has_description_tip(): bool {
 		return ! empty( $this->meta['description_tip'] );
-	}
-
-	/** Override method if you need. */
-	public function should_override_form_template(): bool {
-		return false;
 	}
 
 	final public function get_description(): string {
@@ -78,10 +101,6 @@ abstract class BasicField implements Field {
 		$this->meta['description_tip'] = $value;
 
 		return $this;
-	}
-
-	public function get_type(): string {
-		return 'text';
 	}
 
 	final public function set_placeholder( string $value ): Field {
@@ -132,9 +151,6 @@ abstract class BasicField implements Field {
 		return $this->attributes['id'] ?? sanitize_title( $this->get_name() );
 	}
 
-	public function get_name(): string {
-		return $this->attributes['name'];
-	}
 
 	final public function is_multiple(): bool {
 		return $this->attributes['multiple'];
@@ -211,35 +227,12 @@ abstract class BasicField implements Field {
 		return $this;
 	}
 
-	public function get_validator(): Validator {
-		$chain = new ChainValidator();
-		if ( $this->is_required() ) {
-			$chain->attach( new RequiredValidator() );
-		}
-
-		return $chain;
-	}
-
 	final public function is_required(): bool {
 		return $this->attributes['required'];
 	}
 
-	public function get_sanitizer(): Sanitizer {
-		return new NoSanitize();
-	}
-
-	final public function get_serializer(): Serializer {
-		if ( ! empty( $this->meta['serializer'] ) && $this->meta['serializer'] instanceof Serializer ) {
-			return $this->meta['serializer'];
-		}
-
-		return new NoSerialize();
-	}
-
-	public function set_serializer( Serializer $serializer ): Field {
-		$this->meta['serializer'] = $serializer;
-
-		return $this;
+	final public function has_serializer(): bool {
+		return ! empty( $this->meta['serializer'] );
 	}
 
 	final public function get_priority(): int {

@@ -2,7 +2,6 @@
 
 namespace WPDesk\Forms;
 
-use WPDesk\Persistence\PersistentContainer;
 use WPDesk\View\Renderer\Renderer;
 
 /**

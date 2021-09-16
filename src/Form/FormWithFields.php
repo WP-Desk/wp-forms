@@ -94,8 +94,6 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 
 	/**
 	 * Add array to update data.
-	 *
-	 * @param array|ContainerInterface $request new data to update.
 	 */
 	public function handle_request( array $request = [] ) {
 		if ( $this->updated_data === null ) {
