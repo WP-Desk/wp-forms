@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.0.0]
+### Added
+- Added strong typing to all of the interfaces
+- Added fields sorting by priority field
+- Normalized string escaping in all template files
+- Added InputEmailField and EmailSerializer classes
+### Changed
+- All getters and setter in BasicField are now declared final
+- FormWithFields accepts only ContainerInterface in ::set_data() method. Prepare data before passing it
+### Removed
+- Removed deprecated classes
+- Removed NoSerialize class
+
 ## [2.4.7] - 2021-09-20
 ### Fixed
 - Add missing escaping functions in templates

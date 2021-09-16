@@ -21,7 +21,7 @@ abstract class BasicField implements Field {
 
 	const DEFAULT_PRIORITY = 10;
 
-	/** @var array{default_value: string, possible_values?: string[], sublabel?: string, priority: int, label: string, description: string, description_tip: string, data: array<string|int>, serializer: ?Serializer} */
+	/** @var array{default_value: string, possible_values?: string[], sublabel?: string, priority: int, label: string, description: string, description_tip: string, data: array<string|int>} */
 	protected $meta = [
 		'priority'          => self::DEFAULT_PRIORITY,
 		'default_value'     => '',
@@ -29,7 +29,6 @@ abstract class BasicField implements Field {
 		'description'       => '',
 		'description_tip'   => '',
 		'data'              => [],
-		'serializer'        => null,
 	];
 
 	public function should_override_form_template(): bool {
@@ -53,8 +52,12 @@ abstract class BasicField implements Field {
 		return new NoSanitize();
 	}
 
+	public function has_serializer(): bool {
+		return false;
+	}
+
 	public function get_serializer(): Serializer {
-		return null;
+		throw new \BadMethodCallException('You must define your serializer in a child class.');
 	}
 
 	final public function get_name(): string {
@@ -229,10 +232,6 @@ abstract class BasicField implements Field {
 
 	final public function is_required(): bool {
 		return $this->attributes['required'];
-	}
-
-	final public function has_serializer(): bool {
-		return ! empty( $this->meta['serializer'] );
 	}
 
 	final public function get_priority(): int {

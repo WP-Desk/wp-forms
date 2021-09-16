@@ -91,5 +91,7 @@ interface Field {
 
 	public function get_serializer(): Serializer;
 
+	public function has_serializer(): bool;
+
 	public function get_priority(): int;
 }

@@ -20,9 +20,7 @@ class FieldPersistenceStrategy {
 		$this->persistence = $persistence;
 	}
 
-	/**
-	 * Save fields data.
-	 */
+	/** @return void */
 	public function persist_fields( FieldProvider $fields_provider, array $data ) {
 		foreach ( $fields_provider->get_fields() as $field ) {
 			$field_key = $field->get_name();
@@ -34,9 +32,7 @@ class FieldPersistenceStrategy {
 		}
 	}
 
-	/**
-	 * Load fields data.
-	 */
+	/** @return void */
 	public function load_fields( FieldProvider $fields_provider ): array {
 		$data = [];
 		foreach ( $fields_provider->get_fields() as $field ) {
