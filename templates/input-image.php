@@ -13,15 +13,15 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 			id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
 	<div class="custom-img-container">
 		<?php if ( $value ) : ?>
-            <img src="<?php echo \esc_html( $value ) ?>" alt="" width="100"/>
+            <img src="<?php echo \esc_url( $value ) ?>" alt="" width="100"/>
 		<?php endif; ?>
     </div>
     <p class="hide-if-no-js">
-        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo \esc_html( $value ) ?>">
-			<?php _e( 'Set image', 'wp-forms' ) ?>
+        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo \esc_url( $value ) ?>">
+			<?php \esc_html_e( 'Set image', 'wp-forms' ) ?>
         </a>
         <a class="delete-custom-img <?php if ( ! $value ): ?>hidden<?php endif ?>" href="#">
-			<?php _e( 'Remove image', 'wp-forms' ) ?>
+			<?php \esc_html_e( 'Remove image', 'wp-forms' ) ?>
         </a>
     </p>
 </div>
