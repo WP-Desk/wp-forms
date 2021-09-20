@@ -13,11 +13,11 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
            id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
     <div class="custom-img-container">
 		<?php if ( $value ) : ?>
-            <img src="<?php echo $value ?>" alt="" width="100"/>
+            <img src="<?php echo \esc_html( $value ) ?>" alt="" width="100"/>
 		<?php endif; ?>
     </div>
     <p class="hide-if-no-js">
-        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo $value ?>">
+        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo \esc_html( $value ) ?>">
 			<?php _e( 'Set image', 'wp-forms' ) ?>
         </a>
         <a class="delete-custom-img <?php if ( ! $value ): ?>hidden<?php endif ?>" href="#">
@@ -28,7 +28,7 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 <script>
 	jQuery( function ( $ ) {
 		var frame,
-			metaBox = $( '#<?php echo $media_container_id; ?>' ),
+			metaBox = $( '#<?php echo esc_attr( $media_container_id ); ?>' ),
 			addImgLink = metaBox.find( '.upload-custom-img' ),
 			delImgLink = metaBox.find( '.delete-custom-img' ),
 			imgContainer = metaBox.find( '.custom-img-container' ),
