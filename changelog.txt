@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.4.8] - 2021-09-27
+### Fixed
+- Add escaping functions to all templates
+
 ## [2.4.7] - 2021-09-20
 ### Fixed
 - Add missing escaping functions in templates
