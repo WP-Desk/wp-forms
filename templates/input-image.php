@@ -7,28 +7,28 @@
 
 $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 ?>
-<div class="media-input-wrapper" id="<?php echo $media_container_id; ?>">
-    <input type="hidden" class="image-field-value" value="<?php echo \esc_html( $value ); ?>"
-           name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
-           id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
-    <div class="custom-img-container">
+<div class="media-input-wrapper" id="<?php echo \esc_attr( $media_container_id ); ?>">
+	<input type="hidden" class="image-field-value" value="<?php echo \esc_html( $value ); ?>"
+			name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
+			id="<?php echo \esc_attr( $field->get_id() ); ?>"/>
+	<div class="custom-img-container">
 		<?php if ( $value ) : ?>
-            <img src="<?php echo \esc_html( $value ) ?>" alt="" width="100"/>
+            <img src="<?php echo \esc_url( $value ) ?>" alt="" width="100"/>
 		<?php endif; ?>
     </div>
     <p class="hide-if-no-js">
-        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo \esc_html( $value ) ?>">
-			<?php _e( 'Set image', 'wp-forms' ) ?>
+        <a class="upload-custom-img <?php if ( $value ): ?>hidden<?php endif ?>" href="<?php echo \esc_url( $value ) ?>">
+			<?php \esc_html_e( 'Set image', 'wp-forms' ) ?>
         </a>
         <a class="delete-custom-img <?php if ( ! $value ): ?>hidden<?php endif ?>" href="#">
-			<?php _e( 'Remove image', 'wp-forms' ) ?>
+			<?php \esc_html_e( 'Remove image', 'wp-forms' ) ?>
         </a>
     </p>
 </div>
 <script>
 	jQuery( function ( $ ) {
 		var frame,
-			metaBox = $( '#<?php echo esc_attr( $media_container_id ); ?>' ),
+			metaBox = $( '#<?php echo \esc_attr( $media_container_id ); ?>' ),
 			addImgLink = metaBox.find( '.upload-custom-img' ),
 			delImgLink = metaBox.find( '.delete-custom-img' ),
 			imgContainer = metaBox.find( '.custom-img-container' ),
@@ -42,9 +42,9 @@ $media_container_id = 'media_' . sanitize_key( $field->get_id() );
 			}
 
 			frame = wp.media( {
-				title: <?php _e( 'Select or Upload Media', 'wp-forms' ); ?>,
+				title: <?php esc_html_e( 'Select or Upload Media', 'wp-forms' ); ?>,
 				button: {
-					text: <?php _e( 'Use this media', 'wp-forms' ); ?>
+					text: <?php esc_html_e( 'Use this media', 'wp-forms' ); ?>
 				},
 				library: {
 					type: ['image']
