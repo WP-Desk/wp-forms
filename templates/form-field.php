@@ -11,22 +11,12 @@
 
 <tr valign="top">
 	<?php if ( $field->has_label() ) : ?>
-		<?php echo wp_kses_post( $renderer->render( 'form-label', [ 'field' => $field ] ) ); ?>
+		<?php echo $renderer->render( 'form-label', [ 'field' => $field ] );  // phpcs:ignore ?>
 	<?php endif; ?>
 
 	<td class="forminp">
 		<?php
-		echo wp_kses_post(
-			$renderer->render(
-				$template_name,
-				[
-					'field'       => $field,
-					'renderer'    => $renderer,
-					'name_prefix' => $name_prefix,
-					'value'       => $value,
-				]
-			)
-		);
+		echo $renderer->render( $template_name, [ 'field' => $field, 'renderer' => $renderer, 'name_prefix' => $name_prefix, 'value' => $value ]); // phpcs:ignore
 		?>
 
 		<?php if ( $field->has_description() ) : ?>
