@@ -7,14 +7,4 @@
  * @var string $template_name Real field template.
  */
 
-echo wp_kses_post(
-	$renderer->render(
-		'input',
-		[
-			'field'       => $field,
-			'renderer'    => $renderer,
-			'name_prefix' => $name_prefix,
-			'value'       => $value,
-		]
-	)
-);
+echo $renderer->render( 'input', [ 'field' => $field, 'renderer' => $renderer, 'name_prefix' => $name_prefix, 'value' => $value ] ); // phpcs:ignore
