@@ -9,4 +9,12 @@
 
 ?>
 <?php
-echo $renderer->render( 'input', [ 'field' => $field, 'renderer' => $renderer, 'name_prefix' => $name_prefix, 'value' => $value ] );  // phpcs:ignore
+$renderer->output_render(
+	'input',
+	[
+		'field'       => $field,
+		'renderer'    => $renderer,
+		'name_prefix' => $name_prefix,
+		'value'       => $value,
+	]
+);
