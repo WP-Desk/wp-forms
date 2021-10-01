@@ -1,4 +1,7 @@
 # Changelog
+## [2.4.10] - 2021-10-01
+### Changed
+- Render form data without using echo
 
 ## [2.4.9] - 2021-09-28
 ### Fixed
