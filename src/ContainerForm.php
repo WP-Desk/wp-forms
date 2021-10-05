@@ -4,7 +4,6 @@ namespace WPDesk\Forms;
 
 use Psr\Container\ContainerInterface;
 use WPDesk\Persistence\PersistentContainer;
-use Psr\Container\ContainerInterface;
 
 /**
  * Persistent container support for forms.
@@ -12,6 +11,7 @@ use Psr\Container\ContainerInterface;
  * @package WPDesk\Forms
  */
 interface ContainerForm {
+
 	/**
 	 * @param ContainerInterface $data
 	 *

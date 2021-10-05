@@ -6,6 +6,7 @@ use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\EmailSanitizer;
 
 class InputEmailField extends BasicField {
+
 	public function get_type(): string {
 		return 'email';
 	}

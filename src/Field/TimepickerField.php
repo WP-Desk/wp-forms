@@ -6,6 +6,7 @@ use WPDesk\Forms\Serializer;
 use WPDesk\Forms\Serializer\JsonSerializer;
 
 class TimepickerField extends BasicField {
+
 	public function has_serializer(): bool {
 		return true;
 	}

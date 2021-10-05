@@ -10,14 +10,12 @@
 ?>
 
 <?php
-echo wp_kses_post(
-	$renderer->render(
-		'input',
-		[
-			'field'       => $field,
-			'renderer'    => $renderer,
-			'name_prefix' => $name_prefix,
-			'value'       => $value,
-		]
-	)
+$renderer->output_render(
+	'input',
+	[
+		'field'       => $field,
+		'renderer'    => $renderer,
+		'name_prefix' => $name_prefix,
+		'value'       => $value,
+	]
 );

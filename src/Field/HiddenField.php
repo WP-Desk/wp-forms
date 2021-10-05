@@ -6,6 +6,7 @@ use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
 
 class HiddenField extends BasicField {
+
 	public function get_type(): string {
 		return 'hidden';
 	}

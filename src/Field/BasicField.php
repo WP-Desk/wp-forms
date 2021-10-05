@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms\Field;
 
+use BadMethodCallException;
 use WPDesk\Forms\Field;
 use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\NoSanitize;
@@ -17,6 +18,7 @@ use WPDesk\Forms\Validator\RequiredValidator;
  * @package WPDesk\Forms
  */
 abstract class BasicField implements Field {
+
 	use Field\Traits\HtmlAttributes;
 
 	const DEFAULT_PRIORITY = 10;
@@ -57,7 +59,7 @@ abstract class BasicField implements Field {
 	}
 
 	public function get_serializer(): Serializer {
-		throw new \BadMethodCallException('You must define your serializer in a child class.');
+		throw new BadMethodCallException('You must define your serializer in a child class.');
 	}
 
 	final public function get_name(): string {
