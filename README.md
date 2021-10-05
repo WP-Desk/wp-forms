@@ -50,11 +50,11 @@ interface SettingsTab {
 	/**
 	 * Use to set settings from database or defaults.
 	 *
-	 * @param array|ContainerInterface $data Data to render.
+	 * @param ContainerInterface $data Data to render.
 	 *
 	 * @return void
 	 */
-	public function set_data( $data );
+	public function set_data( ContainerInterface $data );
 
 	/**
 	 * Use to handle request data from POST.
@@ -102,11 +102,11 @@ abstract class FieldSettingsTab implements SettingsTab {
 		return $this->get_form()->render_form( $renderer );
 	}
 
-	public function set_data( $data ) {
+	public function set_data( ContainerInterface $data ) {
 		$this->get_form()->set_data( $data );
 	}
 
-	public function handle_request( $request ) {
+	public function handle_request( array $request ) {
 		$this->get_form()->handle_request( $request );
 	}
 
