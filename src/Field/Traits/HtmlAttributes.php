@@ -2,6 +2,9 @@
 
 namespace WPDesk\Forms\Field\Traits;
 
+use WPDesk\Forms\Field;
+use WPDesk\Forms\Form;
+
 /**
  * Implementation of HTML attributes like id, name, action etc.
  *
@@ -9,19 +12,8 @@ namespace WPDesk\Forms\Field\Traits;
  */
 trait HtmlAttributes {
 
-	/** @var array{placeholder: string, name: string, id: string, class: string[], readonly: bool, multiple: bool, disabled: bool, required: bool, method: string, action: string} */
-	protected $attributes = [
-		'placeholder' => '',
-		'name'        => '',
-		'id'          => '',
-		'class'       => [],
-		'action'      => '',
-		'method'      => 'POST',
-		'readonly'    => false,
-		'multiple'    => false,
-		'disabled'    => false,
-		'required'    => false,
-	];
+	/** @var array{placeholder: string, name: string, id: string, class: string[]} */
+	protected $attributes = [];
 
 	/**
 	 * Get list of all attributes except given.
@@ -30,7 +22,7 @@ trait HtmlAttributes {
 	 *
 	 * @return array<string[]|string|bool>
 	 */
-	final public function get_attributes( array $except = [ 'name' ] ): array {
+	final public function get_attributes( array $except = [ 'name', 'class' ] ): array {
 		return array_filter(
 			$this->attributes,
 			static function ( $key ) use ( $except ) {
@@ -41,10 +33,10 @@ trait HtmlAttributes {
 	}
 
 	/**
-	 * @param string $name
+	 * @param string               $name
 	 * @param string[]|string|bool $value
 	 *
-	 * @return \WPDesk\Forms\Field|\WPDesk\Forms\Form
+	 * @return Field|Form
 	 */
 	final public function set_attribute( string $name, $value ) {
 		$this->attributes[ $name ] = $value;
@@ -53,7 +45,7 @@ trait HtmlAttributes {
 	}
 
 	/**
-	 * @return \WPDesk\Forms\Field|\WPDesk\Forms\Form
+	 * @return HtmlAttributes
 	 */
 	final public function unset_attribute( string $name ) {
 		unset( $this->attributes[ $name ] );
@@ -70,6 +62,7 @@ trait HtmlAttributes {
 			// Be aware of coercing - if implode returns string(0) '', then return $default value.
 			return implode( ' ', $this->attributes[ $name ] ) ?: $default ?? '';
 		}
+
 		return (string) $this->attributes[ $name ] ?? $default ?? '';
 	}
 }

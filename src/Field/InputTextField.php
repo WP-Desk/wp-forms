@@ -6,6 +6,7 @@ use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
 
 class InputTextField extends BasicField {
+
 	public function get_sanitizer(): Sanitizer {
 		return new TextFieldSanitizer();
 	}

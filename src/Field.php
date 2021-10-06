@@ -11,6 +11,7 @@ namespace WPDesk\Forms;
  * @package WPDesk\Forms
  */
 interface Field {
+
 	public function get_name(): string;
 
 	/** @return mixed */

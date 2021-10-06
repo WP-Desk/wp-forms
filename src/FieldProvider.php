@@ -6,6 +6,7 @@ namespace WPDesk\Forms;
  * FieldProvider is owner of FormFields. These fields can be used to render forms and process values.
  */
 interface FieldProvider {
+
 	/**
 	 * Returns owned fields.
 	 *

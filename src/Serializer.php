@@ -3,6 +3,7 @@
 namespace WPDesk\Forms;
 
 interface Serializer {
+
 	/**
 	 * @param mixed $value
 	 */

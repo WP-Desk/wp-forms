@@ -11,13 +11,12 @@
 
 <tr valign="top">
 	<?php if ( $field->has_label() ) : ?>
-		<?php echo wp_kses_post( $renderer->render( 'form-label', [ 'field' => $field ] ) ); ?>
+		<?php $renderer->output_render( 'form-label', [ 'field' => $field ] ); ?>
 	<?php endif; ?>
 
 	<td class="forminp">
 		<?php
-		echo wp_kses_post(
-			$renderer->render(
+			$renderer->output_render(
 				$template_name,
 				[
 					'field'       => $field,
@@ -25,9 +24,8 @@
 					'name_prefix' => $name_prefix,
 					'value'       => $value,
 				]
-			)
-		);
-		?>
+			);
+			?>
 
 		<?php if ( $field->has_description() ) : ?>
 			<p class="description"><?php echo wp_kses_post( $field->get_description() ); ?></p>

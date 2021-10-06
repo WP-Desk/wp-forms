@@ -6,6 +6,7 @@ use WPDesk\Forms\Serializer\ProductSelectSerializer;
 use WPDesk\Forms\Serializer;
 
 class ProductSelect extends SelectField {
+
 	public function __construct() {
 		$this->set_multiple();
 	}

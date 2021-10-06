@@ -11,6 +11,7 @@ use WPDesk\Persistence\PersistentContainer;
  * @package WPDesk\Forms
  */
 interface ContainerForm {
+
 	/**
 	 * @param ContainerInterface $data
 	 *

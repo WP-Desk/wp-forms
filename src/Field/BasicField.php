@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms\Field;
 
+use BadMethodCallException;
 use WPDesk\Forms\Field;
 use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\NoSanitize;
@@ -17,18 +18,19 @@ use WPDesk\Forms\Validator\RequiredValidator;
  * @package WPDesk\Forms
  */
 abstract class BasicField implements Field {
+
 	use Field\Traits\HtmlAttributes;
 
 	const DEFAULT_PRIORITY = 10;
 
 	/** @var array{default_value: string, possible_values?: string[], sublabel?: string, priority: int, label: string, description: string, description_tip: string, data: array<string|int>} */
 	protected $meta = [
-		'priority'          => self::DEFAULT_PRIORITY,
-		'default_value'     => '',
-		'label'             => '',
-		'description'       => '',
-		'description_tip'   => '',
-		'data'              => [],
+		'priority'        => self::DEFAULT_PRIORITY,
+		'default_value'   => '',
+		'label'           => '',
+		'description'     => '',
+		'description_tip' => '',
+		'data'            => [],
 	];
 
 	public function should_override_form_template(): bool {
@@ -57,7 +59,7 @@ abstract class BasicField implements Field {
 	}
 
 	public function get_serializer(): Serializer {
-		throw new \BadMethodCallException('You must define your serializer in a child class.');
+		throw new BadMethodCallException( 'You must define your serializer in a child class.' );
 	}
 
 	final public function get_name(): string {
@@ -154,33 +156,32 @@ abstract class BasicField implements Field {
 		return $this->attributes['id'] ?? sanitize_title( $this->get_name() );
 	}
 
-
 	final public function is_multiple(): bool {
-		return $this->attributes['multiple'];
+		return isset( $this->attributes['multiple'] );
 	}
 
 	final public function set_disabled(): Field {
-		$this->attributes['disabled'] = true;
+		$this->attributes['disabled'] = 'disabled';
 
 		return $this;
 	}
 
 	final public function is_disabled(): bool {
-		return $this->attributes['disabled'];
+		return $this->attributes['disabled'] ?? false;
 	}
 
 	final public function set_readonly(): Field {
-		$this->attributes['readonly'] = true;
+		$this->attributes['readonly'] = 'readonly';
 
 		return $this;
 	}
 
 	final public function is_readonly(): bool {
-		return $this->attributes['readonly'];
+		return $this->attributes['readonly'] ?? false;
 	}
 
 	final public function set_required(): Field {
-		$this->attributes['required'] = true;
+		$this->attributes['required'] = 'required';
 
 		return $this;
 	}
@@ -231,7 +232,7 @@ abstract class BasicField implements Field {
 	}
 
 	final public function is_required(): bool {
-		return $this->attributes['required'];
+		return isset( $this->attributes['required'] );
 	}
 
 	final public function get_priority(): int {

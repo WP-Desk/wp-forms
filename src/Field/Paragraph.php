@@ -3,6 +3,7 @@
 namespace WPDesk\Forms\Field;
 
 class Paragraph extends NoValueField {
+
 	public function get_template_name(): string {
 		return 'paragraph';
 	}

@@ -24,18 +24,6 @@
 				name="<?php echo \esc_attr( $name_prefix ); ?>[<?php echo \esc_attr( $field->get_name() ); ?>]"
 				id="<?php echo \esc_attr( $field->get_id() ); ?>"
 				value="<?php echo \esc_html( $field->get_label() ); ?>"
-				<?php
-				if ( $field->is_required() ) :
-					?>
-					required="required"<?php endif; ?>
-				<?php
-				if ( $field->is_disabled() ) :
-					?>
-					disabled="disabled"<?php endif; ?>
-				<?php
-				if ( $field->is_readonly() ) :
-					?>
-					readonly="readonly"<?php endif; ?>
 			/>
 		</p>
 	</td>

@@ -6,6 +6,7 @@ use WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
 
 class DatePickerField extends BasicField {
+
 	public function __construct() {
 		$this->add_class( 'date-picker' );
 		$this->set_placeholder( 'YYYY-MM-DD' );

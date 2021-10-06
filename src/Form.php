@@ -10,6 +10,7 @@ use WPDesk\View\Renderer\Renderer;
  * @package WPDesk\Forms
  */
 interface Form {
+
 	/**
 	 * For some reason you may want to disable a form. Returns false when disabled.
 	 */
