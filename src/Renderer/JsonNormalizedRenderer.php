@@ -13,28 +13,23 @@ use WPDesk\Forms\FieldRenderer;
 class JsonNormalizedRenderer implements FieldRenderer {
 	/**
 	 * @param FieldProvider $provider
-	 * @param array $fields_data
-	 * @param string $name_prefix
+	 * @param array         $fields_data
+	 * @param string        $name_prefix
 	 *
 	 * @return array Normalized fields with data.
 	 */
 	public function render_fields( FieldProvider $provider, array $fields_data, string $name_prefix = '' ): array {
 		$rendered_fields = [];
 		foreach ( $provider->get_fields() as $field ) {
-			$rendered = [
-				'name'     => $field->get_name(),
-				'template' => $field->get_template_name(),
-				'multiple' => $field->is_multiple(),
-				'disabled' => $field->is_disabled(),
-				'readonly' => $field->is_readonly(),
-				'required' => $field->is_required(),
-				'prefix'   => $name_prefix,
-				'value '   => $fields_data[ $field->get_name() ] ?? $field->get_default_value(),
-			];
-
-			if ( $field->has_classes() ) {
-				$rendered['class'] = $field->get_classes();
+			$rendered = [];
+			foreach ( $field->get_attributes() as $key => $attribute ) {
+				$rendered[ $key ] = $attribute;
 			}
+			$rendered['name']     = $field->get_name();
+			$rendered['template'] = $field->get_template_name();
+			$rendered['prefix']   = $name_prefix;
+			$rendered['value']    = $fields_data[ $field->get_name() ] ?? $field->get_default_value();
+
 			if ( $field->has_description() ) {
 				$rendered['description'] = $field->get_description();
 			}
@@ -43,9 +38,6 @@ class JsonNormalizedRenderer implements FieldRenderer {
 			}
 			if ( $field->has_label() ) {
 				$rendered['label'] = $field->get_label();
-			}
-			if ( $field->has_placeholder() ) {
-				$rendered['placeholder'] = $field->get_placeholder();
 			}
 			$options = $field->get_possible_values();
 			if ( $options ) {

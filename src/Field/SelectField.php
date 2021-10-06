@@ -18,7 +18,7 @@ class SelectField extends BasicField {
 	}
 
 	public function set_multiple(): Field {
-		$this->attributes['multiple'] = true;
+		$this->attributes['multiple'] = 'multiple';
 
 		return $this;
 	}

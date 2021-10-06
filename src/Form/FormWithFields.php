@@ -26,12 +26,14 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	/**
 	 * FormWithFields constructor.
 	 *
-	 * @param Field[]  $fields
-	 * @param string $form_id
+	 * @param Field[] $fields
+	 * @param string  $form_id
 	 */
 	public function __construct( array $fields, string $form_id = 'form' ) {
 		$this->fields  = $fields;
 		$this->form_id = $form_id;
+		$this->set_action( '' );
+		$this->set_method( 'POST' );
 	}
 
 	/** Set Form action attribute. */
@@ -39,6 +41,10 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		$this->attributes['action'] = $action;
 
 		return $this;
+	}
+
+	public function get_action(): string {
+		return $this->attributes['action'];
 	}
 
 	/** Set Form method attribute ie. GET/POST. */
@@ -52,9 +58,6 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $this->attributes['method'];
 	}
 
-	public function get_action(): string {
-		return $this->attributes['action'];
-	}
 
 	public function is_submitted(): bool {
 		return null !== $this->updated_data;
@@ -146,7 +149,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	public function render_form( Renderer $renderer ): string {
-		$content  = $renderer->render(
+		$content = $renderer->render(
 			'form-start',
 			[
 				'form'   => $this,

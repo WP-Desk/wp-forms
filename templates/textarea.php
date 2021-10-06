@@ -19,23 +19,6 @@
 	<?php endforeach; ?>
 
 	<?php
-	if ( $field->is_required() ) :
-		?>
-		required="required"<?php endif; ?>
-	<?php
-	if ( $field->is_disabled() ) :
-		?>
-		disabled="disabled"<?php endif; ?>
-	<?php
-	if ( $field->is_readonly() ) :
-		?>
-		readonly="readonly"<?php endif; ?>
-	<?php
-	if ( $field->is_multiple() ) :
-		?>
-		multiple="multiple"<?php endif; ?>
-
-	<?php
 	if ( $field->has_placeholder() ) :
 		?>
 		placeholder="<?php echo \esc_html( $field->get_placeholder() ); ?>"<?php endif; ?>

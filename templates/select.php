@@ -17,23 +17,6 @@
 	<?php foreach ( $field->get_attributes() as $key => $attr_val ) : ?>
 		<?php echo \esc_attr( $key ); ?>="<?php echo \esc_attr( $attr_val ); ?>"
 	<?php endforeach; ?>
-
-	<?php
-	if ( $field->is_required() ) :
-		?>
-		required="required"<?php endif; ?>
-	<?php
-	if ( $field->is_disabled() ) :
-		?>
-		disabled="disabled"<?php endif; ?>
-	<?php
-	if ( $field->is_readonly() ) :
-		?>
-		readonly="readonly"<?php endif; ?>
-	<?php
-	if ( $field->is_multiple() ) :
-		?>
-		multiple="multiple"<?php endif; ?>
 >
 	<?php
 	if ( $field->has_placeholder() ) :

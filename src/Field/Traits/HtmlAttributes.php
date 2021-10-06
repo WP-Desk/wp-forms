@@ -12,19 +12,8 @@ use WPDesk\Forms\Form;
  */
 trait HtmlAttributes {
 
-	/** @var array{placeholder: string, name: string, id: string, class: string[], readonly: bool, multiple: bool, disabled: bool, required: bool, method: string, action: string} */
-	protected $attributes = [
-		'placeholder' => '',
-		'name'        => '',
-		'id'          => '',
-		'class'       => [],
-		'action'      => '',
-		'method'      => 'POST',
-		'readonly'    => false,
-		'multiple'    => false,
-		'disabled'    => false,
-		'required'    => false,
-	];
+	/** @var array{placeholder: string, name: string, id: string, class: string[]} */
+	protected $attributes = [];
 
 	/**
 	 * Get list of all attributes except given.
@@ -33,18 +22,18 @@ trait HtmlAttributes {
 	 *
 	 * @return array<string[]|string|bool>
 	 */
-	final public function get_attributes( array $except = [ 'name', 'class', 'method', 'action' ] ): array {
+	final public function get_attributes( array $except = [ 'name', 'class' ] ): array {
 		return array_filter(
 			$this->attributes,
-			static function ( $attribute, $key ) use ( $except ) {
-				return ! in_array( $key, $except, true ) && ! empty( $attribute );
+			static function ( $key ) use ( $except ) {
+				return ! in_array( $key, $except, true );
 			},
-			ARRAY_FILTER_USE_BOTH
+			ARRAY_FILTER_USE_KEY
 		);
 	}
 
 	/**
-	 * @param string $name
+	 * @param string               $name
 	 * @param string[]|string|bool $value
 	 *
 	 * @return Field|Form
@@ -73,6 +62,7 @@ trait HtmlAttributes {
 			// Be aware of coercing - if implode returns string(0) '', then return $default value.
 			return implode( ' ', $this->attributes[ $name ] ) ?: $default ?? '';
 		}
+
 		return (string) $this->attributes[ $name ] ?? $default ?? '';
 	}
 }
