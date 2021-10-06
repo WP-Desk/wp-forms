@@ -33,13 +33,13 @@ trait HtmlAttributes {
 	 *
 	 * @return array<string[]|string|bool>
 	 */
-	final public function get_attributes( array $except = [ 'name' ] ): array {
+	final public function get_attributes( array $except = [ 'name', 'method', 'action' ] ): array {
 		return array_filter(
 			$this->attributes,
-			static function ( $key ) use ( $except ) {
-				return ! in_array( $key, $except, true );
+			static function ( $attribute, $key ) use ( $except ) {
+				return ! in_array( $key, $except, true ) && ! empty( $attribute );
 			},
-			ARRAY_FILTER_USE_KEY
+			ARRAY_FILTER_USE_BOTH
 		);
 	}
 
