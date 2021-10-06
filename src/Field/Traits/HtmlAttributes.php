@@ -33,7 +33,7 @@ trait HtmlAttributes {
 	 *
 	 * @return array<string[]|string|bool>
 	 */
-	final public function get_attributes( array $except = [ 'name', 'method', 'action' ] ): array {
+	final public function get_attributes( array $except = [ 'name', 'class', 'method', 'action' ] ): array {
 		return array_filter(
 			$this->attributes,
 			static function ( $attribute, $key ) use ( $except ) {
