@@ -2,8 +2,6 @@
 
 namespace WPDesk\Forms;
 
-use WPDesk\Forms\Field\BasicField;
-
 /**
  * The idea is that from the moment the factory returns this interface it's values cannot be changed.
  * And that is why here are only the getters.
@@ -13,154 +11,88 @@ use WPDesk\Forms\Field\BasicField;
  * @package WPDesk\Forms
  */
 interface Field {
-	/** @return string */
-	public function get_name();
+
+	public function get_name(): string;
 
 	/** @return mixed */
 	public function get_default_value();
 
-	/** @return string */
-	public function get_template_name();
+	public function get_template_name(): string;
 
-	/**
-	 * When this field is used on form this field will force it's own template.
-	 *
-	 * return bool
-	 */
-	public function should_override_form_template();
+	/** When this field is used on form this field will force it's own template. */
+	public function should_override_form_template(): bool;
 
-	/**
-	 * HTML label.
-	 *
-	 * @return string
-	 */
-	public function get_label();
+	/** HTML label. */
+	public function get_label(): string;
 
-	/** bool */
-	public function has_label();
+	public function has_label(): bool;
 
-	/**
-	 * Description for field. It can be shown near the field.
-	 *
-	 * @return string
-	 */
-	public function get_description();
+	public function get_description(): string;
 
-	/**
-	 * Additional field description that should be shown in optional hover tip.
-	 *
-	 * @return string
-	 */
-	public function get_description_tip();
+	/** Additional field description that should be shown in optional hover tip. */
+	public function get_description_tip(): string;
 
-	/** @return bool */
-	public function has_description_tip();
+	public function has_description_tip(): bool;
 
-	/** @return bool */
-	public function has_description();
+	public function has_description(): bool;
 
-	/**
-	 * @return bool
-	 */
-	public function is_readonly();
+	public function is_readonly(): bool;
 
-	/** @return bool */
-	public function is_disabled();
+	public function is_disabled(): bool;
 
-	/** @return string */
-	public function get_id();
+	public function get_id(): string;
 
-	/** @bool */
-	public function is_required();
+	public function is_required(): bool;
 
-	/** @return bool */
-	public function has_placeholder();
+	public function has_placeholder(): bool;
 
-	/** @return string */
-	public function get_placeholder();
+	public function get_placeholder(): string;
 
 	/**
 	 * @param string[] $except
 	 *
 	 * @return string[] name->value
 	 */
-	public function get_attributes( $except = [] );
+	public function get_attributes( array $except = [] ): array;
 
-	/**
-	 * @param string $name
-	 * @param string $default
-	 *
-	 * @return string
-	 */
-	public function get_attribute( $name, $default = null );
+	public function get_attribute( string $name, string $default = null ): string;
 
-	/** @return bool */
-	public function is_attribute_set( $name );
+	public function is_attribute_set( string $name ): bool;
 
-	/**
-	 * @param string $name
-	 *
-	 * @return string
-	 */
-	public function get_meta_value( $name );
+	/** @return mixed */
+	public function get_meta_value( string $name );
 
-	/** @return bool */
-	public function is_meta_value_set( $name );
+	public function is_meta_value_set( string $name ): bool;
 
-	/**
-	 * @return string
-	 */
-	public function get_classes();
+	public function get_classes(): string;
 
-	/** bool */
-	public function has_classes();
+	public function get_type(): string;
 
-	/** @return bool */
-	public function is_class_set( $name );
+	public function has_classes(): bool;
 
-	/** bool */
-	public function has_data();
+	public function is_class_set( string $name ): bool;
 
-	/**
-	 * @return array
-	 */
-	public function get_data();
+	public function has_data(): bool;
 
-	/**
-	 * @param string $data_name
-	 * @param string $data_value
-	 *
-	 * @return $this
-	 */
-	public function add_data( $data_name, $data_value );
+	/** @return array<string|int> */
+	public function get_data(): array;
 
-	/**
-	 * @param string $data_name
-	 *
-	 * @return $this
-	 */
-	public function unset_data( $data_name );
+	public function add_data( string $data_name, string $data_value ): Field;
 
-	/**
-	 * @return mixed
-	 */
+	public function unset_data( string $data_name ): Field;
+
+	/** @return mixed */
 	public function get_possible_values();
 
-	/**
-	 * @return bool
-	 */
-	public function is_multiple();
+	public function is_multiple(): bool;
 
-	/**
-	 * @return Validator
-	 */
-	public function get_validator();
+	public function get_validator(): Validator;
 
-	/**
-	 * @return Sanitizer
-	 */
-	public function get_sanitizer();
+	public function get_sanitizer(): Sanitizer;
 
-	/** @return Serializer */
-	public function get_serializer();
+	public function get_serializer(): Serializer;
+
+	public function has_serializer(): bool;
+
+	public function get_priority(): int;
 }

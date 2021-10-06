@@ -1,3 +1,9 @@
+<?php
+/**
+ * Form ending with hoverable tip snippet in js.
+ */
+
+?>
 </tbody>
 </table>
 </form>

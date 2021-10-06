@@ -1,5 +1,47 @@
 # Changelog
 
+## [3.0.0]
+### Added
+- Added strong typing to all of the interfaces
+- Added fields sorting by priority field
+- Normalized string escaping in all template files
+- Added InputEmailField and EmailSerializer classes
+### Changed
+- All getters and setter in BasicField are now declared final
+- FormWithFields accepts only ContainerInterface in ::set_data() method. Prepare data before passing it
+### Removed
+- Removed deprecated classes
+- Removed NoSerialize class
+
+## [2.4.7] - 2021-09-20
+### Fixed
+- Add missing escaping functions in templates
+
+## [2.4.6] - 2021-08-23
+### Fixed
+- Get attribute now returns attribute instead of bool value
+
+## [2.4.5] - 2021-06-02
+### Fixed
+- Added text multiple field
+- Added image input field
+
+## [2.4.4] - 2021-04-26
+### Fixed
+- Added description_tip to Renderer
+
+## [2.4.2] - 2021-03-10
+### Fixed
+- When no value is provided use default in validation
+
+## [2.4.1] - 2021-02-01
+### Fixed
+- Invalid namespaces
+
+## [2.4.0] - 2021-01-20
+### Added
+- Support for persistence ^3
+
 ## [2.3.2] - 2020-11-30
 ### Fixed
 - Fixed bug with the double name & type attribute

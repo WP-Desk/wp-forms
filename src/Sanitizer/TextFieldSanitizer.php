@@ -5,7 +5,8 @@ namespace WPDesk\Forms\Sanitizer;
 use WPDesk\Forms\Sanitizer;
 
 class TextFieldSanitizer implements Sanitizer {
-	public function sanitize( $value ) {
+
+	public function sanitize( $value ): string {
 		return sanitize_text_field( $value );
 	}
 
