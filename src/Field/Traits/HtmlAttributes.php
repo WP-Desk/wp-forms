@@ -63,6 +63,6 @@ trait HtmlAttributes {
 			return implode( ' ', $this->attributes[ $name ] ) ?: $default ?? '';
 		}
 
-		return (string) $this->attributes[ $name ] ?? $default ?? '';
+		return (string) ( $this->attributes[ $name ] ?? $default ?? '' );
 	}
 }

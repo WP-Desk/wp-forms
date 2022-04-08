@@ -14,8 +14,6 @@ use WPDesk\Forms\Validator\RequiredValidator;
 /**
  * Base class for fields. Is responsible for settings all required field values and provides standard implementation for
  * the field interface.
- *
- * @package WPDesk\Forms
  */
 abstract class BasicField implements Field {
 
@@ -63,11 +61,11 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_name(): string {
-		return $this->attributes['name'];
+		return $this->attributes['name'] ?? '';
 	}
 
 	final public function get_label(): string {
-		return $this->meta['label'];
+		return $this->meta['label'] ?? '';
 	}
 
 	final public function set_label( string $value ): Field {
@@ -77,7 +75,7 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_description_tip(): string {
-		return $this->meta['description_tip'];
+		return $this->meta['description_tip'] ?? '';
 	}
 
 	final public function has_description_tip(): bool {
@@ -85,7 +83,7 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_description(): string {
-		return $this->meta['description'];
+		return $this->meta['description'] ?? '';
 	}
 
 	final public function has_label(): bool {
@@ -119,7 +117,7 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_placeholder(): string {
-		return $this->attributes['placeholder'];
+		return $this->attributes['placeholder'] ?? '';
 	}
 
 	final public function set_name( string $name ): Field {
@@ -129,11 +127,11 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_meta_value( string $name ) {
-		return $this->meta[ $name ];
+		return $this->meta[ $name ] ?? '';
 	}
 
 	final public function get_classes(): string {
-		return implode( ' ', $this->attributes['class'] );
+		return implode( ' ', $this->attributes['class'] ?? [] );
 	}
 
 	final public function has_classes(): bool {
@@ -145,7 +143,7 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_data(): array {
-		return $this->meta['data'];
+		return $this->meta['data'] ?? [];
 	}
 
 	final public function get_possible_values() {
@@ -222,7 +220,7 @@ abstract class BasicField implements Field {
 	}
 
 	final public function get_default_value(): string {
-		return $this->meta['default_value'];
+		return $this->meta['default_value'] ?? '';
 	}
 
 	final public function set_default_value( string $value ): Field {
