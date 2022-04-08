@@ -180,6 +180,10 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	public function get_data(): array {
+		if ( empty( $this->get_fields() ) ) {
+			return [];
+		}
+
 		$data = $this->updated_data;
 
 		foreach ( $this->get_fields() as $field ) {
