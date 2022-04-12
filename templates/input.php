@@ -17,7 +17,6 @@ if ( $field->get_type() === 'checkbox' && $field->has_sublabel() ) :
 <input
 	type="<?php echo \esc_attr( $field->get_type() ); ?>"
 	name="<?php echo \esc_attr( $name_prefix ) . '[' . \esc_attr( $field->get_name() ) . ']'; ?>"
-	id="<?php echo \esc_attr( $field->get_id() ); ?>"
 
 	<?php if ( $field->has_classes() ) : ?>
 		class="<?php echo \esc_attr( $field->get_classes() ); ?>"
