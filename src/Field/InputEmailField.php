@@ -3,19 +3,19 @@
 namespace WPDesk\Forms\Field;
 
 use WPDesk\Forms\Sanitizer;
-use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
+use WPDesk\Forms\Sanitizer\EmailSanitizer;
 
-class InputNumberField extends BasicField {
+class InputEmailField extends BasicField {
 
 	public function get_type(): string {
-		return 'number';
+		return 'email';
 	}
 
 	public function get_sanitizer(): Sanitizer {
-		return new TextFieldSanitizer();
+		return new EmailSanitizer();
 	}
 
 	public function get_template_name(): string {
-		return 'input-number';
+		return 'input-text';
 	}
 }

@@ -16,13 +16,3 @@ if ( getenv( 'PLUGIN_PATH' ) !== false ) {
 } else {
 	define( 'PLUGIN_PATH', __DIR__ . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR );
 }
-
-require_once( getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/functions.php' );
-
-tests_add_filter( 'muplugins_loaded', function () {
-}, 100 );
-
-putenv('WP_TESTS_DIR=' . getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit');
-require_once( getenv( 'WC_DEVELOP_DIR' ) . '/tests/bootstrap.php' );
-
-do_action('plugins_loaded');

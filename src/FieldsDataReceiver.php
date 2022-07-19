@@ -11,10 +11,9 @@ use Psr\Container\ContainerInterface;
  * @package WPDesk\Forms
  */
 interface FieldsDataReceiver {
+
 	/**
 	 * Set values corresponding to fields.
-	 *
-	 * @param ContainerInterface $data
 	 *
 	 * @return void
 	 */
