@@ -12,6 +12,7 @@ use WPDesk\View\Resolver\Resolver;
  * @package WPDesk\Forms\Resolver
  */
 class DefaultFormFieldResolver implements Resolver {
+
 	/** @var Resolver */
 	private $dir_resolver;
 
@@ -19,7 +20,7 @@ class DefaultFormFieldResolver implements Resolver {
 		$this->dir_resolver = new DirResolver( __DIR__ . '/../../templates' );
 	}
 
-	public function resolve( $name, Renderer $renderer = null ) {
+	public function resolve( $name, Renderer $renderer = null ): string {
 		return $this->dir_resolver->resolve( $name, $renderer );
 	}
 
