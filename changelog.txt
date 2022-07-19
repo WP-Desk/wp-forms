@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.0.0] - 2022-07-19
+### Added
+- Added strong typing to all the interfaces
+- Added fields sorting by priority field
+- Normalized string escaping in all template files
+- Added InputEmailField and EmailSerializer classes
+### Changed
+- All getters and setter in BasicField are now declared final
+- FormWithFields accepts only ContainerInterface in ::set_data() method. Prepare data before passing it
+### Removed
+- Removed deprecated classes
+- Removed NoSerialize class
+
 ## [2.4.12] - 2021-12-22
 ### Fixed
 - Fixed image input JS
@@ -19,19 +32,6 @@
 ## [2.4.8] - 2021-09-27
 ### Fixed
 - Add escaping functions to all templates
-
-## [3.0.0]
-### Added
-- Added strong typing to all of the interfaces
-- Added fields sorting by priority field
-- Normalized string escaping in all template files
-- Added InputEmailField and EmailSerializer classes
-### Changed
-- All getters and setter in BasicField are now declared final
-- FormWithFields accepts only ContainerInterface in ::set_data() method. Prepare data before passing it
-### Removed
-- Removed deprecated classes
-- Removed NoSerialize class
 
 ## [2.4.7] - 2021-09-20
 ### Fixed
