@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms\Renderer;
 
+use WPDesk\Forms\Field;
 use WPDesk\Forms\FieldProvider;
 use WPDesk\Forms\FieldRenderer;
 
@@ -20,7 +21,14 @@ class JsonNormalizedRenderer implements FieldRenderer {
 	 */
 	public function render_fields( FieldProvider $provider, array $fields_data, string $name_prefix = '' ): array {
 		$rendered_fields = [];
-		foreach ( $provider->get_fields() as $field ) {
+		$fields          = $provider->get_fields();
+		usort(
+			$fields,
+			static function ( Field $a, Field $b ) {
+				return $a->get_priority() <=> $b->get_priority();
+			}
+		);
+		foreach ( $fields as $field ) {
 			$rendered = [];
 			foreach ( $field->get_attributes() as $key => $attribute ) {
 				$rendered[ $key ] = $attribute;
