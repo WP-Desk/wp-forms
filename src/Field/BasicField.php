@@ -29,6 +29,7 @@ abstract class BasicField implements Field {
 		'description'     => '',
 		'description_tip' => '',
 		'data'            => [],
+		'type'            => 'text',
 	];
 
 	public function should_override_form_template(): bool {
@@ -36,7 +37,13 @@ abstract class BasicField implements Field {
 	}
 
 	public function get_type(): string {
-		return 'text';
+		return $this->meta['type'];
+	}
+
+	public function set_type( string $type ): Field {
+		$this->meta['type'] = $type;
+
+		return $this;
 	}
 
 	public function get_validator(): Validator {

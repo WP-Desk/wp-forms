@@ -6,6 +6,10 @@ use WPDesk\Forms\Field;
 
 class SelectField extends BasicField {
 
+	public function get_type(): string {
+		return 'select';
+	}
+
 	public function get_template_name(): string {
 		return 'select';
 	}
