@@ -4,3 +4,4 @@ composer.lock
 build-coverage
 swagger
 .phpcs-cache
+/lang/*.mo
