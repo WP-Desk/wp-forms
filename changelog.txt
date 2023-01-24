@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.1.0] - 2022-08-30
+### Added
+- de_DE translations
+
 ## [3.0.0] - 2022-07-19
 ### Added
 - Added strong typing to all the interfaces
