@@ -8,7 +8,7 @@
 wp_print_styles( 'media-views' );
 
 $default_settings = [
-	'textarea_name' => esc_attr( $name_prefix ) . '[' . esc_attr( $this->get_name() ) . ']',
+	'textarea_name' => esc_attr( $name_prefix ) . '[' . esc_attr( $field->get_name() ) . ']',
 	'tinymce'       => [
 		'toolbar1' => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
 		'toolbar2' => '',
