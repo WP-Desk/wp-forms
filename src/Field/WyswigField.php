@@ -2,6 +2,11 @@
 
 namespace WPDesk\Forms\Field;
 
+/**
+ * @deprecated
+ *
+ * Use WPEditorField
+ */
 class WyswigField extends BasicField {
 
 	public function get_template_name(): string {
