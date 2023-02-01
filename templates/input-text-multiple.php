@@ -57,7 +57,7 @@ if ( empty( $value ) || is_string( $value ) ) {
 	</div>
 
 	<?php if ( $field->get_type() === 'checkbox' && $field->has_sublabel() ) : ?>
-		<?php echo \esc_html( $field->get_sublabel() ); ?></label>
+		<?php echo $field->get_sublabel(); ?></label>
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
