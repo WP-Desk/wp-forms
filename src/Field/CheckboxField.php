@@ -6,6 +6,9 @@ use WPDesk\Forms\Field;
 
 class CheckboxField extends BasicField {
 
+	const VALUE_TRUE  = 'yes';
+	const VALUE_FALSE = 'no';
+
 	public function get_type(): string {
 		return 'checkbox';
 	}
