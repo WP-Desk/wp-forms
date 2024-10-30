@@ -26,4 +26,3 @@ interface ContainerForm {
 	 */
 	public function put_data( PersistentContainer $container );
 }
-

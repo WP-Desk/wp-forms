@@ -29,5 +29,4 @@ class ProductSelectSerializer implements Serializer {
 	public function unserialize( string $value ) {
 		return $value;
 	}
-
 }

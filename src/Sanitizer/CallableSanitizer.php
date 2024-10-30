@@ -16,5 +16,4 @@ class CallableSanitizer implements Sanitizer {
 	public function sanitize( $value ): string {
 		return call_user_func( $this->callable, $value );
 	}
-
 }

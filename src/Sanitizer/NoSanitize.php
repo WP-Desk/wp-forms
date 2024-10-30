@@ -9,5 +9,4 @@ class NoSanitize implements Sanitizer {
 	public function sanitize( $value ) {
 		return $value;
 	}
-
 }

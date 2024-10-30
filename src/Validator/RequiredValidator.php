@@ -13,5 +13,4 @@ class RequiredValidator implements Validator {
 	public function get_messages(): array {
 		return [];
 	}
-
 }

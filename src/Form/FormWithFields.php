@@ -149,7 +149,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	public function render_form( Renderer $renderer ): string {
-		$content = $renderer->render(
+		$content  = $renderer->render(
 			'form-start',
 			[
 				'form'   => $this,

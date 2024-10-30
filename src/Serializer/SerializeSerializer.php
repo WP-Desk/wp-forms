@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.PHP.DiscouragedPHPFunctions
 
 namespace WPDesk\Forms\Serializer;
 
@@ -13,5 +14,4 @@ class SerializeSerializer implements Serializer {
 	public function unserialize( string $value ) {
 		return unserialize( $value );
 	}
-
 }

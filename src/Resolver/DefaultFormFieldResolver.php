@@ -23,5 +23,4 @@ class DefaultFormFieldResolver implements Resolver {
 	public function resolve( $name, Renderer $renderer = null ): string {
 		return $this->dir_resolver->resolve( $name, $renderer );
 	}
-
 }

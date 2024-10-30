@@ -7,7 +7,7 @@ use WPDesk\Forms\Sanitizer\TextFieldSanitizer;
 class DateField extends BasicField {
 
 	public function __construct() {
-		$this->set_placeholder('YYYY-MM-DD');
+		$this->set_placeholder( 'YYYY-MM-DD' );
 	}
 
 	public function get_type(): string {
@@ -17,5 +17,4 @@ class DateField extends BasicField {
 	public function get_template_name(): string {
 		return 'input-text';
 	}
-
 }

@@ -63,4 +63,3 @@ interface Form {
 	 */
 	public function get_form_id(): string;
 }
-

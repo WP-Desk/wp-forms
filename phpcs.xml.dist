@@ -45,4 +45,10 @@
 		<exclude name="Squiz.Commenting.ClassComment.Missing"/>
 	</rule>
 
+	<rule ref="Universal.NamingConventions.NoReservedKeywordParameterNames">
+		<exclude-pattern>*src/Field/Traits/HtmlAttributes.php$</exclude-pattern>
+		<exclude-pattern>*src/Sanitizer/CallableSanitizer.php$</exclude-pattern>
+		<exclude-pattern>*src/Field.php$</exclude-pattern>
+	</rule>
+
 </ruleset>

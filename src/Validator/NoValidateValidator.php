@@ -13,5 +13,4 @@ class NoValidateValidator implements Validator {
 	public function get_messages(): array {
 		return [];
 	}
-
 }
