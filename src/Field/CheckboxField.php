@@ -21,7 +21,7 @@ class CheckboxField extends BasicField {
 		return $this->meta['sublabel'];
 	}
 
-	public function set_sublabel( string $value ): Field {
+	public function set_sublabel( string $value ): self {
 		$this->meta['sublabel'] = $value;
 
 		return $this;
