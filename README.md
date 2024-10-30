@@ -1,17 +1,9 @@
-[![pipeline status](https://gitlab.com/wpdesk/wp-forms/badges/master/pipeline.svg)](https://gitlab.com/wpdesk/wp-forms/pipelines)
-[![coverage report](https://gitlab.com/wpdesk/wp-forms/badges/master/coverage.svg)](https://gitlab.com/wpdesk/wp-forms/commits/master)
-[![Latest Stable Version](https://poser.pugx.org/wpdesk/wp-forms/v/stable)](https://packagist.org/packages/wpdesk/wp-forms)
-[![Total Downloads](https://poser.pugx.org/wpdesk/wp-forms/downloads)](https://packagist.org/packages/wpdesk/wp-forms)
-[![Latest Unstable Version](https://poser.pugx.org/wpdesk/wp-forms/v/unstable)](https://packagist.org/packages/wpdesk/wp-forms)
-[![License](https://poser.pugx.org/wpdesk/wp-forms/license)](https://packagist.org/packages/wpdesk/wp-forms)
-
 WordPress Library for Form integration
 ===================================================
 
-
 ## Requirements
 
-PHP 7.0 or later.
+PHP 7.4 or later.
 
 ## Composer
 

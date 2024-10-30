@@ -34,10 +34,10 @@
 	<config name="text_domain" value="wp-forms"/>
 
 	<!-- This value should be aligned with WordPress support version declared in plugin header -->
-	<config name="minimum_supported_wp_version" value="5.0"/>
+	<config name="minimum_supported_wp_version" value="6.4"/>
 
 	<!-- Set value aligned with supported PHP Version for PHPCompatibilityWP check. -->
-	<config name="testVersion" value="7.0-"/>
+	<config name="testVersion" value="7.4-"/>
 
 	<rule ref="WPDeskPlugin"/>
 
