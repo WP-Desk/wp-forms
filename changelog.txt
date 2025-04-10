@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.3.0] - 2025-04-XX
+### Added
+- ToggleField class, extends CheckboxField for toggle button functionality.
+
 ## [3.2.1] - 2024-10-30
 ### Changed
 - Raised required PHP version to 7.4.
