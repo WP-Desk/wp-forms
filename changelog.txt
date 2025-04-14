@@ -1,13 +1,10 @@
 # Changelog
 
-## [4.0.0] - 2025-04-XX
+## [3.3.0] - 2025-04-XX
 ### Added
 - ToggleField class, extends CheckboxField for toggle button functionality.
 ### Changed
 - Declared nullable parameter types (e.g. `?string`, `?Renderer`) to fix PHP 8.4 deprecation warnings about implicitly nullable parameters.
-### Removed
-- Support for PHP < 7.1.
-
 
 ## [3.2.1] - 2024-10-30
 ### Changed
