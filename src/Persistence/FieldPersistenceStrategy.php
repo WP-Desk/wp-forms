@@ -43,9 +43,7 @@ class FieldPersistenceStrategy {
 				} else {
 					$data[ $field_key ] = $this->persistence->get( $field_key );
 				}
-			} catch ( NotFoundExceptionInterface $not_found ) {
-				// TODO: Logger
-				// LoggerFactory::get_logger()->info( "FieldPersistenceStrategy:: Field {$field_key} not found" );
+			} catch ( NotFoundExceptionInterface $not_found ) { //phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
 			}
 		}
 

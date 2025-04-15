@@ -57,7 +57,7 @@ trait HtmlAttributes {
 		return ! empty( $this->attributes[ $name ] );
 	}
 
-	final public function get_attribute( string $name, string $default = null ): string {
+	final public function get_attribute( string $name, ?string $default = null ): string {
 		if ( is_array( $this->attributes[ $name ] ) ) {
 			// Be aware of coercing - if implode returns string(0) '', then return $default value.
 			return implode( ' ', $this->attributes[ $name ] ) ?: $default ?? '';
