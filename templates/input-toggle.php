@@ -8,42 +8,52 @@
  */
 
 ?>
+	<style>
+		input[type="checkbox"].wpd-toggle-field {
+			position: absolute;
+			opacity: 0;
+			width: 32px;
+			height: 16px;
+			margin: 0;
+		}
 
-<style>
-	input[type="checkbox"].wpd-toggle-field {
-		all:unset;
-		background: #fff;
-		border:1px solid #949494;
-		width:32px;
-		height: 16px;
-		position: relative;
-		cursor: pointer;
-		border-radius: 200px;
-	}
-	input[type="checkbox"].wpd-toggle-field::before {
-		all:unset;
-		content: "";
-		display: block !important;
-		height: 14px;
-		width:14px;
-		background: #1c1c1c;
-		border-radius: 100%;
-		position: absolute;
-		left: 1px;
-		top:1px;
-		transition: 0.25s;
-		transition-timing-function: ease-out;
-	}
-	input[type="checkbox"].wpd-toggle-field:checked {
-		background: var(--wp-admin-theme-color, #1851e0);
-		border-color: var(--wp-admin-theme-color, #1851e0);
-	}
-	input[type="checkbox"].wpd-toggle-field:checked:before {
-		left: 17px;
-		background: #fff;
-	}
+		.wpd-toggle-label {
+			display: inline-block;
+			width: 32px;
+			height: 16px;
+			background: #fff;
+			border: 1px solid #949494;
+			border-radius: 200px;
+			position: relative;
+			cursor: pointer;
+			transition: background 0.25s, border-color 0.25s;
+			vertical-align: middle;
+		}
 
-</style>
+		.wpd-toggle-label::before {
+			content: "";
+			display: block;
+			height: 14px;
+			width: 14px;
+			background: #1c1c1c;
+			border-radius: 50%;
+			position: absolute;
+			left: 1px;
+			top: 1px;
+			transition: 0.25s;
+			transition-timing-function: ease-out;
+		}
+
+		input[type="checkbox"].wpd-toggle-field:checked + .wpd-toggle-label {
+			background: var(--wp-admin-theme-color, #1851e0);
+			border-color: var(--wp-admin-theme-color, #1851e0);
+		}
+
+		input[type="checkbox"].wpd-toggle-field:checked + .wpd-toggle-label::before {
+			left: 17px;
+			background: #fff;
+		}
+	</style>
 <?php
 $renderer->output_render(
 	'input',
