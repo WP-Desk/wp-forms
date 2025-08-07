@@ -9,48 +9,62 @@
 
 ?>
 	<style>
-		input[type="checkbox"].wpd-toggle-field {
+		.wpd-toggle-field {
 			position: absolute;
 			opacity: 0;
 			width: 32px;
 			height: 16px;
 			margin: 0;
+			pointer-events: none;
 		}
 
-		.wpd-toggle-label {
-			display: inline-block;
+		label:has(> input.wpd-toggle-field) {
+			display: inline-flex;
+			align-items: center;
+			position: relative;
+			cursor: pointer;
+			user-select: none;
+			padding-left: 40px;
+			font-size: 16px;
+			line-height: 1;
+			color: #000;
+			height: 16px;
+		}
+
+		label:has(> input.wpd-toggle-field)::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
 			width: 32px;
 			height: 16px;
 			background: #fff;
 			border: 1px solid #949494;
 			border-radius: 200px;
-			position: relative;
-			cursor: pointer;
 			transition: background 0.25s, border-color 0.25s;
-			vertical-align: middle;
+			box-sizing: content-box;
 		}
 
-		.wpd-toggle-label::before {
+		label:has(> input.wpd-toggle-field)::after {
 			content: "";
-			display: block;
-			height: 14px;
+			position: absolute;
+			left: 2px;
+			top: 2px;
 			width: 14px;
+			height: 14px;
 			background: #1c1c1c;
 			border-radius: 50%;
-			position: absolute;
-			left: 1px;
-			top: 1px;
-			transition: 0.25s;
-			transition-timing-function: ease-out;
+			transition: left 0.25s ease-out, background 0.25s;
+			box-sizing: border-box;
 		}
 
-		input[type="checkbox"].wpd-toggle-field:checked + .wpd-toggle-label {
+		label:has(> input.wpd-toggle-field:checked)::before {
 			background: var(--wp-admin-theme-color, #1851e0);
 			border-color: var(--wp-admin-theme-color, #1851e0);
 		}
 
-		input[type="checkbox"].wpd-toggle-field:checked + .wpd-toggle-label::before {
-			left: 17px;
+		label:has(> input.wpd-toggle-field:checked)::after {
+			left: 18px;
 			background: #fff;
 		}
 	</style>

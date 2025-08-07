@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.3.2] - 2025-08-07
+### Fixed
+- ToggleField styling
+
 ## [3.3.1] - 2025-08-07
 ### Fixed
 - ToggleField styling for appearance in Firefox
