@@ -22,7 +22,6 @@
 			display: inline-flex;
 			align-items: center;
 			position: relative;
-			cursor: pointer;
 			user-select: none;
 			padding-left: 40px;
 			font-size: 16px;
@@ -32,6 +31,7 @@
 		}
 
 		label:has(> input.wpd-toggle-field)::before {
+			cursor: pointer;
 			content: "";
 			position: absolute;
 			left: 0;
@@ -66,6 +66,19 @@
 		label:has(> input.wpd-toggle-field:checked)::after {
 			left: 18px;
 			background: #fff;
+		}
+
+		label:has(> input.wpd-toggle-field:disabled)::before {
+			opacity: 0.9;
+			cursor: unset;
+		}
+
+		label:has(> input.wpd-toggle-field:disabled)::after {
+			opacity: 0.5;
+		}
+
+		input.wpd-toggle-field:disabled{
+			opacity: 0;
 		}
 	</style>
 <?php
