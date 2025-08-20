@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.3.4] - 2025-08-12
+### Added
+- Added styling for disabled toggle button
+
 ## [3.3.3] - 2025-08-12
 ### Fixed
 - ToggleField styling
