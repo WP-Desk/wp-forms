@@ -136,6 +136,25 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $this->validation_messages;
 	}
 
+	public function get_field_messages( string $field_name ): array {
+		return $this->validation_messages[ $field_name ] ?? [];
+	}
+
+	/**
+	 * Allows consumers to act on each validation message (e.g., add WP notices).
+	 *
+	 * @param callable $callback fn( string $field_name, string $message ): void
+	 *
+	 * @return void
+	 */
+	public function dispatch_validation_messages( callable $callback ): void {
+		foreach ( $this->validation_messages as $field => $messages ) {
+			foreach ( $messages as $message ) {
+				$callback( $field, $message );
+			}
+		}
+	}
+
 	/**
 	 * Add array to update data.
 	 */

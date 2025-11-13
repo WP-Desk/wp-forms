@@ -40,6 +40,34 @@ class TestFormWithFields extends TestCase {
 		);
 	}
 
+	public function test_dispatch_validation_messages_invokes_callback(): void {
+		$field = ( new TestField() )->set_name( 'sample' );
+		$field->add_validator(
+			new class implements Validator {
+				public function is_valid( $value ): bool {
+					return false;
+				}
+
+				public function get_messages(): array {
+					return [ 'invalid' ];
+				}
+			}
+		);
+
+		$form = new FormWithFields( [ $field ] );
+		$form->handle_request( [ 'sample' => 'value' ] );
+		$form->is_valid();
+
+		$messages = [];
+		$form->dispatch_validation_messages(
+			static function ( string $field, string $message ) use ( &$messages ) {
+				$messages[] = $field . ':' . $message;
+			}
+		);
+
+		$this->assertSame( [ 'sample:invalid' ], $messages );
+	}
+
 	public function test_sanitizes_after_handle_request(): void {
 		$field = ( new TestField() )->set_name( 'sample' );
 
