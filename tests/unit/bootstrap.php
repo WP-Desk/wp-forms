@@ -4,6 +4,7 @@
  */
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/stubs/TestField.php';
 
 WP_Mock::setUsePatchwork( true );
 WP_Mock::bootstrap();

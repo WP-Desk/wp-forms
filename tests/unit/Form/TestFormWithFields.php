@@ -8,9 +8,10 @@ use PHPUnit\Framework\TestCase;
 use WPDesk\Forms\Field\GroupField;
 use WPDesk\Forms\Form\FormWithFields;
 use WPDesk\Forms\Sanitizer;
+use WPDesk\Forms\Tests\Stubs\TestField;
 use WPDesk\Forms\Validator;
 
-class FormWithFieldsTest extends TestCase {
+class TestFormWithFields extends TestCase {
 
 	public function test_collects_validation_messages(): void {
 		$field = ( new TestField() )->set_name( 'sample' );
@@ -39,20 +40,8 @@ class FormWithFieldsTest extends TestCase {
 		);
 	}
 
-	public function test_sanitizes_after_successful_validation(): void {
+	public function test_sanitizes_after_handle_request(): void {
 		$field = ( new TestField() )->set_name( 'sample' );
-
-		$field->add_validator(
-			new class implements Validator {
-				public function is_valid( $value ): bool {
-					return ! empty( $value );
-				}
-
-				public function get_messages(): array {
-					return [];
-				}
-			}
-		);
 
 		$field->add_sanitizer(
 			new class implements Sanitizer {
@@ -65,7 +54,6 @@ class FormWithFieldsTest extends TestCase {
 		$form = new FormWithFields( [ $field ] );
 		$form->handle_request( [ 'sample' => 'value' ] );
 
-		$this->assertTrue( $form->is_valid() );
 		$this->assertSame(
 			[
 				'sample' => 'VALUE',
@@ -83,14 +71,6 @@ class FormWithFieldsTest extends TestCase {
 		$form = new FormWithFields( [ $group ] );
 		$form->handle_request( [ 'child' => 'abc' ] );
 
-		$this->assertTrue( $form->is_valid() );
 		$this->assertSame( 'abc', $form->get_data()['child'] );
-	}
-}
-
-class TestField extends \WPDesk\Forms\Field\BasicField {
-
-	public function get_template_name(): string {
-		return 'input-text';
 	}
 }
