@@ -246,9 +246,55 @@ final class Settings {
 		} );
 	}
 
-	private function get_renderer(): \WPDesk\View\Renderer\Renderer {
-		return new SimplePhpRenderer( new DefaultFormFieldResolver() );
+private function get_renderer(): \WPDesk\View\Renderer\Renderer {
+	return new SimplePhpRenderer( new DefaultFormFieldResolver() );
+}
+
+### Tabbed forms
+
+```php
+use WPDesk\Forms\Field\TabField;
+use WPDesk\Forms\Form\TabbedForm;
+
+$general = ( new TabField( [ /* fields */ ] ) )
+	->set_tab_id( 'general' )
+	->set_label( __( 'General', 'text-domain' ) );
+
+$advanced = ( new TabField( [ /* fields */ ] ) )
+	->set_tab_id( 'advanced' )
+	->set_label( __( 'Advanced', 'text-domain' ) );
+
+$form = new TabbedForm( [ $general, $advanced ], 'my-form' );
+$form->set_active_tab( sanitize_key( $_GET['tab'] ?? 'general' ) );
+```
+
+### Persisting form data
+
+```php
+use WPDesk\Forms\Persistence\FormPersistence;
+
+$form = new FormWithFields( $fields, 'my-form' );
+$persistence = FormPersistence::for_form( $form, $container );
+
+if ( $_POST ) {
+	$form->handle_request( $_POST['my-form'] ?? [] );
+	if ( $form->is_valid() ) {
+		$persistence->save_form( $form );
 	}
+}
+
+$persistence->hydrate_form( $form );
+```
+
+### Rendering without HTML
+
+```php
+use WPDesk\Forms\Renderer\JsonSchemaRenderer;
+use WPDesk\Forms\Renderer\WooSettingsRenderer;
+
+$json_schema = ( new JsonSchemaRenderer() )->render_fields( $form, $form->get_data() );
+$woo_settings = ( new WooSettingsRenderer() )->render_fields( $form, $form->get_data() );
+```
 
 	/**
 	 * @return string[]
