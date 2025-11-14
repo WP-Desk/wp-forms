@@ -33,11 +33,11 @@ abstract class BasicField implements Field {
 		'type'            => 'text',
 	];
 
-		/** @var ChainValidator */
-		private $validator_chain;
+	/** @var ChainValidator|null */
+	private $validator_chain;
 
-		/** @var ChainSanitizer */
-		private $sanitizer_chain;
+	/** @var ChainSanitizer|null */
+	private $sanitizer_chain;
 
 		/** @var bool */
 		private $required_validator_attached = false;
@@ -56,26 +56,26 @@ abstract class BasicField implements Field {
 		return $this;
 	}
 
-		public function get_validator(): Validator {
-			$this->ensure_required_validator();
+	public function get_validator(): Validator {
+		$this->ensure_required_validator();
 
-			return $this->validator_chain();
-		}
+		return $this->validator_chain();
+	}
 
-		public function add_validator( Validator $validator ): self {
-			$this->validator_chain()->attach( $validator );
+	public function add_validator( Validator $validator ): self {
+		$this->validator_chain()->attach( $validator );
 
-			return $this;
-		}
+		return $this;
+	}
 
-		public function get_sanitizer(): Sanitizer {
-			return $this->sanitizer_chain();
-		}
+	public function get_sanitizer(): Sanitizer {
+		return $this->sanitizer_chain();
+	}
 
-		public function add_sanitizer( Sanitizer $sanitizer ): self {
-			$this->sanitizer_chain()->attach( $sanitizer );
+	public function add_sanitizer( Sanitizer $sanitizer ): self {
+		$this->sanitizer_chain()->attach( $sanitizer );
 
-			return $this;
+		return $this;
 	}
 
 	public function has_serializer(): bool {
@@ -204,12 +204,12 @@ abstract class BasicField implements Field {
 		return $this->attributes['readonly'] ?? false;
 	}
 
-		final public function set_required(): self {
-			$this->attributes['required'] = 'required';
-			$this->required_validator_attached = false;
+	final public function set_required(): self {
+		$this->attributes['required']      = 'required';
+		$this->required_validator_attached = false;
 
-			return $this;
-		}
+		return $this;
+	}
 
 	final public function add_class( string $class_name ): self {
 		$this->attributes['class'][ $class_name ] = $class_name;
@@ -269,34 +269,34 @@ abstract class BasicField implements Field {
 	 *
 	 * @see FormWithFields::get_fields()
 	 */
-		final public function set_priority( int $priority ): self {
-			$this->meta['priority'] = $priority;
+	final public function set_priority( int $priority ): self {
+		$this->meta['priority'] = $priority;
 
-			return $this;
-		}
-
-		private function validator_chain(): ChainValidator {
-			if ( ! isset( $this->validator_chain ) ) {
-				$this->validator_chain = new ChainValidator();
-			}
-
-			return $this->validator_chain;
-		}
-
-		private function ensure_required_validator(): void {
-			if ( ! $this->is_required() || $this->required_validator_attached ) {
-				return;
-			}
-
-			$this->validator_chain()->attach( new RequiredValidator() );
-			$this->required_validator_attached = true;
-		}
-
-		private function sanitizer_chain(): ChainSanitizer {
-			if ( ! isset( $this->sanitizer_chain ) ) {
-				$this->sanitizer_chain = new ChainSanitizer( [ new NoSanitize() ] );
-			}
-
-			return $this->sanitizer_chain;
-		}
+		return $this;
 	}
+
+	private function validator_chain(): ChainValidator {
+		if ( ! isset( $this->validator_chain ) ) {
+			$this->validator_chain = new ChainValidator();
+		}
+
+		return $this->validator_chain;
+	}
+
+	private function ensure_required_validator(): void {
+		if ( ! $this->is_required() || $this->required_validator_attached ) {
+			return;
+		}
+
+		$this->validator_chain()->attach( new RequiredValidator() );
+		$this->required_validator_attached = true;
+	}
+
+	private function sanitizer_chain(): ChainSanitizer {
+		if ( ! isset( $this->sanitizer_chain ) ) {
+			$this->sanitizer_chain = new ChainSanitizer( [ new NoSanitize() ] );
+		}
+
+		return $this->sanitizer_chain;
+	}
+}

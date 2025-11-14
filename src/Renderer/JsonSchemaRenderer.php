@@ -8,6 +8,10 @@ use WPDesk\Forms\FieldRenderer;
 
 class JsonSchemaRenderer implements FieldRenderer {
 
+	/**
+	 * @param array<string, mixed> $fields_data
+	 * @return array{type: string, properties: array<string, array<string, mixed>>, required: string[]}
+	 */
 	public function render_fields( FieldProvider $provider, array $fields_data, string $name_prefix = '' ) {
 		$properties = [];
 		$required   = [];

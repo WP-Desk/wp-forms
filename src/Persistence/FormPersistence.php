@@ -27,6 +27,9 @@ class FormPersistence {
 		$this->strategy->persist_fields( $this->provider, $form->get_normalized_data() );
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function load(): array {
 		return $this->strategy->load_fields( $this->provider );
 	}

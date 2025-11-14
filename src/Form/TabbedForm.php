@@ -2,6 +2,7 @@
 
 namespace WPDesk\Forms\Form;
 
+use WPDesk\Forms\Field;
 use WPDesk\Forms\Field\TabField;
 use WPDesk\View\Renderer\Renderer;
 
@@ -10,14 +11,14 @@ use WPDesk\View\Renderer\Renderer;
  */
 class TabbedForm extends FormWithFields {
 
-	/** @var TabField[] */
+	/** @var array<string, TabField> */
 	private $tabs = [];
 
 	/** @var string */
 	private $active_tab_id = '';
 
 	/**
-	 * @param TabField[] $tabs
+	 * @param Field[] $tabs
 	 */
 	public function __construct( array $tabs, string $form_id = 'form', ?string $active_tab = null ) {
 		parent::__construct( $tabs, $form_id );
@@ -54,6 +55,9 @@ class TabbedForm extends FormWithFields {
 		return $this->tabs;
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function get_tab_labels(): array {
 		$labels = [];
 		foreach ( $this->tabs as $tab ) {
@@ -67,6 +71,9 @@ class TabbedForm extends FormWithFields {
 		return $this->tabs[ $this->active_tab_id ] ?? null;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function get_active_tab_data(): array {
 		$active = $this->get_active_tab();
 		if ( ! $active ) {

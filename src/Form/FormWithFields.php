@@ -106,7 +106,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		}
 
 		$this->validation_messages = [];
-		$is_valid = true;
+		$is_valid                  = true;
 
 		foreach ( $this->all_fields() as $field ) {
 			$field_name = $field->get_name();
@@ -132,10 +132,16 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $is_valid;
 	}
 
+	/**
+	 * @return array<string, string[]>
+	 */
 	public function get_validation_messages(): array {
 		return $this->validation_messages;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function get_field_messages( string $field_name ): array {
 		return $this->validation_messages[ $field_name ] ?? [];
 	}
@@ -157,6 +163,8 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 
 	/**
 	 * Add array to update data.
+	 *
+	 * @param array<string, mixed> $request
 	 */
 	public function handle_request( array $request = [] ) {
 		$this->submitted           = true;
@@ -240,12 +248,15 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		}
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function get_data(): array {
 		if ( empty( $this->get_fields() ) ) {
 			return [];
 		}
 
-		$data = $this->updated_data ?? [];
+		$data = $this->updated_data;
 
 		foreach ( $this->all_fields() as $field ) {
 			$data_key = $field->get_name();
@@ -266,6 +277,9 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $data;
 	}
 
+	/**
+	 * @return Field[]
+	 */
 	public function get_fields(): array {
 		$fields = $this->fields;
 
@@ -283,8 +297,11 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $this->form_id;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function get_normalized_data(): array {
-		$data = $this->updated_data ?? [];
+		$data = $this->updated_data;
 
 		foreach ( $this->all_fields() as $field ) {
 			$data_key = $field->get_name();
@@ -300,15 +317,15 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $data;
 	}
 
+	/**
+	 * @return Field[]
+	 */
 	private function all_fields(): array {
 		$flat_fields = [];
 		$stack       = $this->fields;
 
 		while ( ! empty( $stack ) ) {
 			$field = array_shift( $stack );
-			if ( ! $field instanceof Field ) {
-				continue;
-			}
 
 			$flat_fields[] = $field;
 
@@ -324,6 +341,9 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $flat_fields;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	private function resolve_value( Field $field ) {
 		$name = $field->get_name();
 
@@ -338,6 +358,10 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $field->get_default_value();
 	}
 
+	/**
+	 * @param array<string, mixed> $fields_data
+	 * @return mixed
+	 */
 	private function resolve_render_value( Field $field, array $fields_data ) {
 		if ( $field instanceof \Traversable ) {
 			$values = [];
