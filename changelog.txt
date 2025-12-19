@@ -16,6 +16,12 @@
 ### Fixed
 - ToggleField styling for appearance in Firefox
 
+## [3.3.1] - 2025-12-18
+### Fixed
+- Register only one javascript for MultipleInputTextField per page
+- Support for disabled field
+
+
 ## [3.3.0] - 2025-04-15
 ### Added
 - ToggleField class, extends CheckboxField for toggle button functionality.
