@@ -17,8 +17,23 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	/** @var string Unique form_id. */
 	protected $form_id = 'form';
 
-	/** @var array Updated data. */
-	private $updated_data;
+	/** @var array<string, mixed> */
+	private $updated_data = [];
+
+	/** @var array<string, mixed> */
+	private $raw_data = [];
+
+	/** @var array<string, string[]> */
+	private $validation_messages = [];
+
+	/** @var bool */
+	private $submitted = false;
+
+	/** @var bool */
+	private $is_validated = false;
+
+	/** @var bool */
+	private $validation_result = true;
 
 	/** @var Field[] Form fields. */
 	private $fields;
@@ -34,6 +49,8 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		$this->form_id = $form_id;
 		$this->set_action( '' );
 		$this->set_method( 'POST' );
+		$this->updated_data = [];
+		$this->raw_data     = [];
 	}
 
 	/** Set Form action attribute. */
@@ -60,7 +77,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 
 
 	public function is_submitted(): bool {
-		return null !== $this->updated_data;
+		return $this->submitted;
 	}
 
 	/** @return void */
@@ -84,27 +101,85 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	public function is_valid(): bool {
-		foreach ( $this->fields as $field ) {
-			$field_value     = $this->updated_data[ $field->get_name() ] ?? $field->get_default_value();
-			$field_validator = $field->get_validator();
-			if ( ! $field_validator->is_valid( $field_value ) ) {
-				return false;
+		if ( $this->is_validated ) {
+			return $this->validation_result;
+		}
+
+		$this->validation_messages = [];
+		$is_valid                  = true;
+
+		foreach ( $this->all_fields() as $field ) {
+			$field_name = $field->get_name();
+			if ( '' === $field_name ) {
+				continue;
+			}
+
+			$value     = $this->resolve_value( $field );
+			$validator = $field->get_validator();
+
+			if ( ! $validator->is_valid( $value ) ) {
+				$is_valid = false;
+				$messages = $validator->get_messages();
+				if ( ! empty( $messages ) ) {
+					$this->validation_messages[ $field_name ] = $messages;
+				}
 			}
 		}
 
-		return true;
+		$this->is_validated      = true;
+		$this->validation_result = $is_valid;
+
+		return $is_valid;
+	}
+
+	/**
+	 * @return array<string, string[]>
+	 */
+	public function get_validation_messages(): array {
+		return $this->validation_messages;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function get_field_messages( string $field_name ): array {
+		return $this->validation_messages[ $field_name ] ?? [];
+	}
+
+	/**
+	 * Allows consumers to act on each validation message (e.g., add WP notices).
+	 *
+	 * @param callable $callback fn( string $field_name, string $message ): void
+	 *
+	 * @return void
+	 */
+	public function dispatch_validation_messages( callable $callback ): void {
+		foreach ( $this->validation_messages as $field => $messages ) {
+			foreach ( $messages as $message ) {
+				$callback( $field, $message );
+			}
+		}
 	}
 
 	/**
 	 * Add array to update data.
+	 *
+	 * @param array<string, mixed> $request
 	 */
 	public function handle_request( array $request = [] ) {
-		if ( $this->updated_data === null ) {
-			$this->updated_data = [];
-		}
-		foreach ( $this->fields as $field ) {
+		$this->submitted           = true;
+		$this->raw_data            = [];
+		$this->validation_messages = [];
+		$this->is_validated        = false;
+		$this->validation_result   = true;
+
+		foreach ( $this->all_fields() as $field ) {
 			$data_key = $field->get_name();
-			if ( isset( $request[ $data_key ] ) ) {
+			if ( '' === $data_key ) {
+				continue;
+			}
+			if ( array_key_exists( $data_key, $request ) ) {
+				$this->raw_data[ $data_key ]     = $request[ $data_key ];
 				$this->updated_data[ $data_key ] = $field->get_sanitizer()->sanitize( $request[ $data_key ] );
 			}
 		}
@@ -116,8 +191,11 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	 * @return void
 	 */
 	public function set_data( ContainerInterface $data ) {
-		foreach ( $this->fields as $field ) {
+		foreach ( $this->all_fields() as $field ) {
 			$data_key = $field->get_name();
+			if ( '' === $data_key ) {
+				continue;
+			}
 			if ( $data->has( $data_key ) ) {
 				try {
 					$this->updated_data[ $data_key ] = $data->get( $data_key );
@@ -139,7 +217,7 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 					'field'         => $field,
 					'renderer'      => $renderer,
 					'name_prefix'   => $this->get_form_id(),
-					'value'         => $fields_data[ $field->get_name() ] ?? $field->get_default_value(),
+					'value'         => $this->resolve_render_value( $field, $fields_data ),
 					'template_name' => $field->get_template_name(),
 				]
 			);
@@ -164,21 +242,15 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 	}
 
 	public function put_data( PersistentContainer $container ) {
-		foreach ( $this->get_fields() as $field ) {
-			$data_key = $field->get_name();
-
-			if ( empty( $data_key ) ) {
-				continue;
-			}
-
-			if ( ! isset( $this->updated_data[ $data_key ] ) ) {
-				$container->set( $data_key, $field->get_default_value() );
-			} else {
-				$container->set( $data_key, $this->updated_data[ $data_key ] );
-			}
+		$normalized = $this->get_normalized_data();
+		foreach ( $normalized as $key => $value ) {
+			$container->set( $key, $value );
 		}
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function get_data(): array {
 		if ( empty( $this->get_fields() ) ) {
 			return [];
@@ -186,16 +258,28 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 
 		$data = $this->updated_data;
 
-		foreach ( $this->get_fields() as $field ) {
+		foreach ( $this->all_fields() as $field ) {
 			$data_key = $field->get_name();
-			if ( ! isset( $data[ $data_key ] ) ) {
+			if ( '' === $data_key ) {
+				continue;
+			}
+			if ( ! array_key_exists( $data_key, $data ) ) {
 				$data[ $data_key ] = $field->get_default_value();
+			}
+		}
+
+		if ( $this->is_submitted() ) {
+			foreach ( $this->raw_data as $key => $value ) {
+				$data[ $key ] = $value;
 			}
 		}
 
 		return $data;
 	}
 
+	/**
+	 * @return Field[]
+	 */
 	public function get_fields(): array {
 		$fields = $this->fields;
 
@@ -213,7 +297,93 @@ class FormWithFields implements Form, ContainerForm, FieldProvider {
 		return $this->form_id;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function get_normalized_data(): array {
-		return $this->get_data();
+		$data = $this->updated_data;
+
+		foreach ( $this->all_fields() as $field ) {
+			$data_key = $field->get_name();
+			if ( '' === $data_key ) {
+				continue;
+			}
+
+			if ( ! array_key_exists( $data_key, $data ) ) {
+				$data[ $data_key ] = $field->get_default_value();
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @return Field[]
+	 */
+	private function all_fields(): array {
+		$flat_fields = [];
+		$stack       = $this->fields;
+
+		while ( ! empty( $stack ) ) {
+			$field = array_shift( $stack );
+
+			$flat_fields[] = $field;
+
+			if ( $field instanceof \Traversable ) {
+				foreach ( $field as $child ) {
+					if ( $child instanceof Field ) {
+						$stack[] = $child;
+					}
+				}
+			}
+		}
+
+		return $flat_fields;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	private function resolve_value( Field $field ) {
+		$name = $field->get_name();
+
+		if ( $name === '' ) {
+			return null;
+		}
+
+		if ( array_key_exists( $name, $this->updated_data ) ) {
+			return $this->updated_data[ $name ];
+		}
+
+		return $field->get_default_value();
+	}
+
+	/**
+	 * @param array<string, mixed> $fields_data
+	 * @return mixed
+	 */
+	private function resolve_render_value( Field $field, array $fields_data ) {
+		if ( $field instanceof \Traversable ) {
+			$values = [];
+			foreach ( $field as $child ) {
+				if ( ! $child instanceof Field ) {
+					continue;
+				}
+				$values[ $child->get_name() ] = $this->resolve_render_value( $child, $fields_data );
+			}
+
+			return $values;
+		}
+
+		$name = $field->get_name();
+		if ( '' === $name ) {
+			return null;
+		}
+
+		if ( $this->is_submitted() && array_key_exists( $name, $this->raw_data ) ) {
+			return $this->raw_data[ $name ];
+		}
+
+		return $fields_data[ $name ] ?? $field->get_default_value();
 	}
 }

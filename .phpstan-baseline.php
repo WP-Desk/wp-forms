@@ -140,34 +140,10 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/src/Field/CheckboxField.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Parameter \\#1 \\$action of class WPDesk\\\\Forms\\\\Validator\\\\NonceValidator constructor expects string, mixed given\\.$#',
-	'identifier' => 'argument.type',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Field/NoOnceField.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\FieldRenderer\\:\\:render_fields\\(\\) has parameter \\$fields_data with no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/FieldRenderer.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method WPDesk\\\\Forms\\\\FieldRenderer\\:\\:render_fields\\(\\) return type has no value type specified in iterable type array\\.$#',
 	'identifier' => 'missingType.iterableValue',
 	'count' => 1,
 	'path' => __DIR__ . '/src/FieldRenderer.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\:\\:get_normalized_data\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Form.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\:\\:handle_request\\(\\) has parameter \\$request with no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Form.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\\\FormWithFields\\:\\:get_action\\(\\) should return string but returns mixed\\.$#',
@@ -176,26 +152,8 @@ $ignoreErrors[] = [
 	'path' => __DIR__ . '/src/Form/FormWithFields.php',
 ];
 $ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\\\FormWithFields\\:\\:get_data\\(\\) should return array\\<int\\|string\\> but returns array\\.$#',
-	'identifier' => 'return.type',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Form/FormWithFields.php',
-];
-$ignoreErrors[] = [
 	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\\\FormWithFields\\:\\:get_method\\(\\) should return string but returns mixed\\.$#',
 	'identifier' => 'return.type',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Form/FormWithFields.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\\\FormWithFields\\:\\:get_normalized_data\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Form/FormWithFields.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Form\\\\FormWithFields\\:\\:handle_request\\(\\) has parameter \\$request with no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
 	'count' => 1,
 	'path' => __DIR__ . '/src/Form/FormWithFields.php',
 ];
@@ -232,7 +190,7 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#2 \\$value of method WPDesk\\\\Persistence\\\\PersistentContainer\\:\\:set\\(\\) expects array\\|float\\|int\\|string, mixed given\\.$#',
 	'identifier' => 'argument.type',
-	'count' => 2,
+	'count' => 1,
 	'path' => __DIR__ . '/src/Form/FormWithFields.php',
 ];
 $ignoreErrors[] = [
@@ -252,30 +210,6 @@ $ignoreErrors[] = [
 	'identifier' => 'assign.propertyType',
 	'count' => 1,
 	'path' => __DIR__ . '/src/Form/FormWithFields.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Property WPDesk\\\\Forms\\\\Form\\\\FormWithFields\\:\\:\\$updated_data type has no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Form/FormWithFields.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Persistence\\\\FieldPersistenceStrategy\\:\\:load_fields\\(\\) return type has no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Persistence/FieldPersistenceStrategy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^Method WPDesk\\\\Forms\\\\Persistence\\\\FieldPersistenceStrategy\\:\\:persist_fields\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#',
-	'identifier' => 'missingType.iterableValue',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Persistence/FieldPersistenceStrategy.php',
-];
-$ignoreErrors[] = [
-	'message' => '#^PHPDoc tag @return with type void is incompatible with native type array\\.$#',
-	'identifier' => 'return.phpDocType',
-	'count' => 1,
-	'path' => __DIR__ . '/src/Persistence/FieldPersistenceStrategy.php',
 ];
 $ignoreErrors[] = [
 	'message' => '#^Parameter \\#1 \\$value of method WPDesk\\\\Forms\\\\Serializer\\:\\:unserialize\\(\\) expects string, mixed given\\.$#',

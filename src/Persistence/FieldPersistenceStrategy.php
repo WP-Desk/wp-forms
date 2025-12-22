@@ -20,19 +20,31 @@ class FieldPersistenceStrategy {
 		$this->persistence = $persistence;
 	}
 
-	/** @return void */
+	/**
+	 * @param array<string, mixed> $data
+	 * @return void
+	 */
 	public function persist_fields( FieldProvider $fields_provider, array $data ) {
 		foreach ( $fields_provider->get_fields() as $field ) {
 			$field_key = $field->get_name();
-			if ( $field->has_serializer() ) {
-				$this->persistence->set( $field_key, $field->get_serializer()->serialize( $data[ $field_key ] ) );
-			} else {
-				$this->persistence->set( $field_key, $data[ $field_key ] );
+
+			if ( '' === $field_key ) {
+				continue;
 			}
+
+			$value = array_key_exists( $field_key, $data ) ? $data[ $field_key ] : $field->get_default_value();
+
+			if ( $field->has_serializer() ) {
+				$value = $field->get_serializer()->serialize( $value );
+			}
+
+			$this->persistence->set( $field_key, $value );
 		}
 	}
 
-	/** @return void */
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function load_fields( FieldProvider $fields_provider ): array {
 		$data = [];
 		foreach ( $fields_provider->get_fields() as $field ) {
@@ -43,7 +55,8 @@ class FieldPersistenceStrategy {
 				} else {
 					$data[ $field_key ] = $this->persistence->get( $field_key );
 				}
-			} catch ( NotFoundExceptionInterface $not_found ) { //phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			} catch ( NotFoundExceptionInterface $not_found ) {
+				$data[ $field_key ] = $field->get_default_value();
 			}
 		}
 

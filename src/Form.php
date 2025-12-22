@@ -30,7 +30,7 @@ interface Form {
 	/**
 	 * Add array to update data.
 	 *
-	 * @param array $request New data to update.
+	 * @param array<string, mixed> $request New data to update.
 	 *
 	 * @return void
 	 */
@@ -46,7 +46,7 @@ interface Form {
 	/**
 	 * Get data from form. Use after handle_request or set_data.
 	 *
-	 * @return array<int|string>
+	 * @return array<string, mixed>
 	 */
 	public function get_data(): array;
 
@@ -54,7 +54,7 @@ interface Form {
 	 * Get data from form. Use after handle_request or set_data.
 	 * The difference get_data is that here you will not get any objects and complex data types besides arrays.
 	 *
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function get_normalized_data(): array;
 
